@@ -36,7 +36,7 @@ public:
 	void but_capture();
 	void but_loadmodel();
 	void but_start_detect();
-	void but_stop_detect();
+	void but_show_landmark();
 
 private:
 	Ui::Emotion_DetectClass ui;
@@ -44,11 +44,13 @@ private:
 	QImage *qCam;
 	QTimer *timer;
 	Mat frame_towrite;
+	Mat frame_with_landMark;
 	VideoCapture cap;
 	int captype;
 	int current_frame;
 	LandmarkPredict LPredict;
 	int video_is_detect;
+	int is_show_landmark;
 };
 
 #endif // EMOTION_DETECT_H

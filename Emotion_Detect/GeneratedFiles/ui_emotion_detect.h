@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
@@ -46,14 +47,15 @@ public:
     QSplitter *splitter;
     QPushButton *but_loadlbf;
     QPushButton *but_start_detect;
-    QPushButton *but_stop_detect;
+    QPushButton *but_show_landmark;
+    QCheckBox *check_landmark_withNum;
     QLabel *label;
 
     void setupUi(QMainWindow *Emotion_DetectClass)
     {
         if (Emotion_DetectClass->objectName().isEmpty())
             Emotion_DetectClass->setObjectName(QStringLiteral("Emotion_DetectClass"));
-        Emotion_DetectClass->resize(555, 619);
+        Emotion_DetectClass->resize(555, 637);
         centralWidget = new QWidget(Emotion_DetectClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayoutWidget = new QWidget(centralWidget);
@@ -114,11 +116,11 @@ public:
         gridLayout->setColumnStretch(1, 1);
         but_capture = new QPushButton(centralWidget);
         but_capture->setObjectName(QStringLiteral("but_capture"));
-        but_capture->setGeometry(QRect(200, 510, 75, 61));
+        but_capture->setGeometry(QRect(300, 500, 75, 61));
         predict_control = new QGroupBox(centralWidget);
         predict_control->setObjectName(QStringLiteral("predict_control"));
         predict_control->setEnabled(true);
-        predict_control->setGeometry(QRect(10, 470, 161, 141));
+        predict_control->setGeometry(QRect(10, 470, 161, 161));
         splitter = new QSplitter(predict_control);
         splitter->setObjectName(QStringLiteral("splitter"));
         splitter->setGeometry(QRect(30, 20, 101, 101));
@@ -129,12 +131,15 @@ public:
         but_start_detect = new QPushButton(splitter);
         but_start_detect->setObjectName(QStringLiteral("but_start_detect"));
         splitter->addWidget(but_start_detect);
-        but_stop_detect = new QPushButton(splitter);
-        but_stop_detect->setObjectName(QStringLiteral("but_stop_detect"));
-        splitter->addWidget(but_stop_detect);
+        but_show_landmark = new QPushButton(splitter);
+        but_show_landmark->setObjectName(QStringLiteral("but_show_landmark"));
+        splitter->addWidget(but_show_landmark);
+        check_landmark_withNum = new QCheckBox(predict_control);
+        check_landmark_withNum->setObjectName(QStringLiteral("check_landmark_withNum"));
+        check_landmark_withNum->setGeometry(QRect(10, 130, 131, 20));
         label = new QLabel(centralWidget);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(330, 530, 54, 12));
+        label->setGeometry(QRect(460, 520, 54, 12));
         Emotion_DetectClass->setCentralWidget(centralWidget);
 
         retranslateUi(Emotion_DetectClass);
@@ -150,7 +155,8 @@ public:
         predict_control->setTitle(QApplication::translate("Emotion_DetectClass", "Predict", 0));
         but_loadlbf->setText(QApplication::translate("Emotion_DetectClass", "Load Model", 0));
         but_start_detect->setText(QApplication::translate("Emotion_DetectClass", "Start Detect", 0));
-        but_stop_detect->setText(QApplication::translate("Emotion_DetectClass", "Stop Detect", 0));
+        but_show_landmark->setText(QApplication::translate("Emotion_DetectClass", "Show LandMark", 0));
+        check_landmark_withNum->setText(QApplication::translate("Emotion_DetectClass", "LandMark with Num", 0));
         label->setText(QApplication::translate("Emotion_DetectClass", "TextLabel", 0));
     } // retranslateUi
 

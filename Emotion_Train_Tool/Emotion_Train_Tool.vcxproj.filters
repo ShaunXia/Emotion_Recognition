@@ -50,6 +50,12 @@
     <ClCompile Include="GeneratedFiles\qrc_emotion_train_tool.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="ImgLandMark.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LBFModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="emotion_train_tool.h">
@@ -66,5 +72,17 @@
     <ClInclude Include="GeneratedFiles\ui_emotion_train_tool.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
+    <ClInclude Include="ImgLandMark.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LBFModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="haarcascade_frontalface_alt.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shape_1.dat" />
   </ItemGroup>
 </Project>

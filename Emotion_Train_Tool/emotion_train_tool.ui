@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>555</width>
-    <height>593</height>
+    <width>851</width>
+    <height>488</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -96,73 +96,139 @@
      </item>
     </layout>
    </widget>
-   <widget class="QPushButton" name="but_capture">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>500</y>
-      <width>75</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Capture</string>
-    </property>
-   </widget>
    <widget class="QGroupBox" name="group_emotion">
     <property name="enabled">
      <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>490</y>
-      <width>311</width>
-      <height>80</height>
+      <x>560</x>
+      <y>70</y>
+      <width>251</width>
+      <height>171</height>
      </rect>
     </property>
     <property name="title">
-     <string>Emotion Type:</string>
+     <string>SVM TRAIN</string>
     </property>
-    <widget class="QPushButton" name="but_happy">
+    <widget class="QPushButton" name="but_capture">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>30</y>
-       <width>75</width>
-       <height>23</height>
+       <y>60</y>
+       <width>71</width>
+       <height>61</height>
       </rect>
      </property>
      <property name="text">
-      <string>Happy</string>
+      <string>Capture</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="but_normal">
+    <widget class="QWidget" name="">
      <property name="geometry">
       <rect>
        <x>120</x>
-       <y>30</y>
-       <width>75</width>
-       <height>23</height>
+       <y>40</y>
+       <width>91</width>
+       <height>101</height>
       </rect>
      </property>
-     <property name="text">
-      <string>Normal</string>
-     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QPushButton" name="but_sleepy">
+        <property name="text">
+         <string>Sleepy</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="but_normal">
+        <property name="text">
+         <string>Normal</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="but_happy">
+        <property name="text">
+         <string>Happy</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
-    <widget class="QPushButton" name="but_sleepy">
+   </widget>
+   <widget class="QGroupBox" name="group_facs">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>290</y>
+      <width>251</width>
+      <height>171</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>FACS TRAIN INFO</string>
+    </property>
+    <widget class="QPlainTextEdit" name="log_facs_info">
      <property name="geometry">
       <rect>
-       <x>220</x>
-       <y>30</y>
+       <x>110</x>
+       <y>20</y>
+       <width>131</width>
+       <height>141</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="but_facs_info">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
        <width>75</width>
        <height>23</height>
       </rect>
      </property>
      <property name="text">
-      <string>Sleepy</string>
+      <string>Get Info</string>
      </property>
     </widget>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>20</y>
+      <width>247</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <property name="spacing">
+      <number>10</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="but_svm_or_facs">
+       <property name="text">
+        <string>SVM/FACS</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="but_load_model">
+       <property name="text">
+        <string>Load Model</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="but_detect_trigger">
+       <property name="text">
+        <string>Off/Detect</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>

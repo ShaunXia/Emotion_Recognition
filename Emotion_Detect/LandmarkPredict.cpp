@@ -54,6 +54,11 @@ string LandmarkPredict::predict(Mat &input)
 }
 string LandmarkPredict::doPredictFACS(vector<Point> &vec_landmark)
 {
+	return "x";
+}
+
+void LandmarkPredict::landMarkInfo(vector<Point>& input)
+{
 
 }
 
@@ -98,10 +103,11 @@ int LandmarkPredict::getLandmark(Mat &frame,vector<Point> &vec_landmark)
 				min_point_y=parts[j].y;
 			Point center( parts[j].x, parts[j].y ); 
 			ellipse( frame, center, Size( 1, 1), 0, 0, 0, Scalar( 255, 0, 255 ), 4, 8, 0); 
+			/*
 			char c[3];
 			sprintf(c, "%d", j);
 			string words= c;  
-			putText( frame, words, center,CV_FONT_HERSHEY_COMPLEX, 0.3, Scalar(255, 0, 0)); 
+			putText( frame, words, center,CV_FONT_HERSHEY_COMPLEX, 0.3, Scalar(255, 0, 0)); */
 		}
 
 		int l_width=max_point_x-min_point_x;

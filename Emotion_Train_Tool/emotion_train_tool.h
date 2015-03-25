@@ -21,6 +21,7 @@
 #include <fstream>
 #include <qtimer.h>
 #include <qdatetimeedit.h>
+#include "ImgLandMark.h"
 
 using namespace cv;
 
@@ -43,15 +44,24 @@ public:
 	void but_normal();
 	void but_sleepy();
 
+	void but_svm_or_facs();
+	void but_load_model();
+	void but_detect_trigger();
+	void but_facs_info();
+
 private:
 	Ui::Emotion_Train_ToolClass ui;
 	QString filePath;
 	QImage *qCam;
 	QTimer *timer;
 	Mat frame_towrite;
+	Mat frame_tolandmark;
 	VideoCapture cap;
 	int captype;
 	int current_frame;
+
+	int isdetect;
+	ImgLandMark landmark;
 };
 
 #endif // EMOTION_TRAIN_TOOL_H

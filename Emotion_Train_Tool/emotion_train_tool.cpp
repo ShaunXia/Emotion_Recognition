@@ -9,7 +9,8 @@ Emotion_Train_Tool::Emotion_Train_Tool(QWidget *parent)
 	timer->setInterval(60);
 	ui.video_status->setDisabled(true);
 	ui.group_emotion->setDisabled(true);
-
+	ui.group_facs->setDisabled(true);
+	isdetect=0;
 
 	connect(timer,SIGNAL(timeout()),this,SLOT(startLoopSlot()));
 	connect(ui.choose_path, SIGNAL(clicked()), this, SLOT(getFileList()));
@@ -20,6 +21,11 @@ Emotion_Train_Tool::Emotion_Train_Tool(QWidget *parent)
 	connect(ui.but_happy,SIGNAL(clicked()),this,SLOT(but_happy()));
 	connect(ui.but_normal,SIGNAL(clicked()),this,SLOT(but_normal()));
 	connect(ui.but_sleepy,SIGNAL(clicked()),this,SLOT(but_sleepy()));
+
+	connect(ui.but_svm_or_facs,SIGNAL(clicked()),this,SLOT(but_svm_or_facs()));
+	connect(ui.but_load_model,SIGNAL(clicked()),this,SLOT(but_load_model()));
+	connect(ui.but_detect_trigger,SIGNAL(clicked()),this,SLOT(but_detect_trigger()));
+	connect(ui.but_facs_info,SIGNAL(clicked()),this,SLOT(but_facs_info()));
 
 }
 
@@ -59,15 +65,19 @@ void Emotion_Train_Tool::itemclick (QListWidgetItem *item)
 
 
 		//QMessageBox::information(this,"helo",tppath);
-		Mat mat_frame=imread(tppath.toStdString());
-		double scale = 456*1.0/mat_frame.rows;
-		Mat image2;
-		cv::resize(mat_frame,image2,Size(mat_frame.cols*scale,mat_frame.rows*scale),0,0,CV_INTER_LINEAR);
-
-		cvtColor(image2, image2, CV_BGR2RGB); 
-		QImage *qJpg = new QImage((unsigned char*)image2.data, // uchar* data  
-			image2.cols, image2.rows, // width height
-			image2.step, //bytesPerLine  
+		frame_tolandmark=imread(tppath.toStdString());
+		double scale = 456*1.0/frame_tolandmark.rows;
+		cv::resize(frame_tolandmark,frame_tolandmark,Size(frame_tolandmark.cols*scale,frame_tolandmark.rows*scale),0,0,CV_INTER_LINEAR);
+		vector<Point> tp;
+		frame_towrite=frame_tolandmark.clone();
+		if (isdetect)
+		{
+			landmark.getLandmark(frame_tolandmark,tp);
+		}
+		cvtColor(frame_tolandmark, frame_tolandmark, CV_BGR2RGB); 
+		QImage *qJpg = new QImage((unsigned char*)frame_tolandmark.data, // uchar* data  
+			frame_tolandmark.cols, frame_tolandmark.rows, // width height
+			frame_tolandmark.step, //bytesPerLine  
 			QImage::Format_RGB888); //format  
 		ui.picshow->setPixmap(QPixmap::fromImage(*qJpg));
 		ui.picshow->resize(qJpg->size());
@@ -140,8 +150,14 @@ void Emotion_Train_Tool::startLoopSlot()
 	}
 
 	Mat frame;
-	cap >> frame_towrite; // get a new frame from camera
-	cvtColor(frame_towrite, frame, CV_BGR2RGB); 
+	cap >> frame_tolandmark; // get a new frame from camera
+	frame_towrite=frame_tolandmark.clone();
+	vector<Point> tp;
+	if (isdetect)
+	{
+		landmark.getLandmark(frame_tolandmark,tp);
+	}
+	cvtColor(frame_tolandmark, frame, CV_BGR2RGB); 
 	qCam = new QImage((unsigned char*)frame.data, // uchar* data  
 		frame.cols, frame.rows, // width height  
 		frame.step, //bytesPerLine  
@@ -164,7 +180,9 @@ void Emotion_Train_Tool::slide_release()
 void Emotion_Train_Tool::but_capture()
 {
 	timer->stop();
-	ui.group_emotion->setDisabled(false);
+	ui.but_happy->setDisabled(false);
+	ui.but_normal->setDisabled(false);
+	ui.but_sleepy->setDisabled(false);
 }
 
 void Emotion_Train_Tool::but_happy()
@@ -174,7 +192,9 @@ void Emotion_Train_Tool::but_happy()
 	str.append(time.toString("MMdd_hh_mm_ss"));
 	str.append(".jpg");
 	imwrite(str.toStdString(),frame_towrite);
-	ui.group_emotion->setDisabled(true);
+	ui.but_happy->setDisabled(true);
+	ui.but_normal->setDisabled(true);
+	ui.but_sleepy->setDisabled(true);
 	timer->start();
 }
 
@@ -186,7 +206,9 @@ void Emotion_Train_Tool::but_normal()
 	str.append(time.toString("MMdd_hh_mm_ss"));
 	str.append(".jpg");
 	imwrite(str.toStdString(),frame_towrite);
-	ui.group_emotion->setDisabled(true);
+	ui.but_happy->setDisabled(true);
+	ui.but_normal->setDisabled(true);
+	ui.but_sleepy->setDisabled(true);
 	timer->start();
 }
 
@@ -198,6 +220,79 @@ void Emotion_Train_Tool::but_sleepy()
 	str.append(time.toString("MMdd_hh_mm_ss"));
 	str.append(".jpg");
 	imwrite(str.toStdString(),frame_towrite);
-	ui.group_emotion->setDisabled(true);
+	ui.but_happy->setDisabled(true);
+	ui.but_normal->setDisabled(true);
+	ui.but_sleepy->setDisabled(true);
 	timer->start();
+}
+
+void Emotion_Train_Tool::but_svm_or_facs()
+{
+	if (ui.group_emotion->isEnabled())
+	{
+		ui.group_emotion->setDisabled(true);
+		ui.group_facs->setDisabled(false);
+		ui.fileList->setDisabled(true);
+	}
+	else
+	{
+		ui.group_emotion->setDisabled(false);
+		ui.group_facs->setDisabled(true);
+		ui.but_happy->setDisabled(true);
+		ui.but_normal->setDisabled(true);
+		ui.but_sleepy->setDisabled(true);
+		ui.fileList->setDisabled(false);
+	}
+}
+
+void Emotion_Train_Tool::but_load_model()
+{
+	landmark.loadModel();
+	ui.but_load_model->setText("Loaded!");
+}
+void Emotion_Train_Tool::but_detect_trigger()
+{
+	isdetect=!isdetect;
+	QString str("Detect:");
+	str.append(QString::number(isdetect));
+	ui.but_detect_trigger->setText(str);
+}
+void Emotion_Train_Tool::but_facs_info()
+{
+	for (int i = 1; i < ui.fileList->count(); i++)
+	{
+		QString tppath = filePath;
+		tppath.append("/").append(ui.fileList->item(i)->text());
+		
+		frame_tolandmark=imread(tppath.toStdString());
+		double scale = 456*1.0/frame_tolandmark.rows;
+		cv::resize(frame_tolandmark,frame_tolandmark,Size(frame_tolandmark.cols*scale,frame_tolandmark.rows*scale),0,0,CV_INTER_LINEAR);
+		vector<Point> tp;
+		frame_towrite=frame_tolandmark.clone();
+		
+		
+		cvtColor(frame_tolandmark, frame_tolandmark, CV_BGR2RGB); 
+		QImage *qJpg = new QImage((unsigned char*)frame_tolandmark.data, // uchar* data  
+			frame_tolandmark.cols, frame_tolandmark.rows, // width height
+			frame_tolandmark.step, //bytesPerLine  
+			QImage::Format_RGB888); //format  
+		ui.picshow->setPixmap(QPixmap::fromImage(*qJpg));
+		ui.picshow->resize(qJpg->size());
+
+		landmark.getLandmark(frame_tolandmark,tp);
+		if (tp.size()!=0)
+		{
+			double dis = sqrt((tp[33].x-tp[30].x)*(tp[33].x-tp[30].x)+(tp[33].y-tp[30].y)*(tp[33].y-tp[30].y));
+
+		ui.log_facs_info->insertPlainText(QString::number(dis));
+		//ui.log_facs_info->insertPlainText(dis);
+		ui.log_facs_info->insertPlainText("\n");
+		}
+		else
+			ui.log_facs_info->insertPlainText("no face \n");
+		
+		waitKey(0);
+
+
+	}
 }

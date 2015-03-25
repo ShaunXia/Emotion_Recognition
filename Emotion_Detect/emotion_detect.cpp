@@ -9,6 +9,7 @@ Emotion_Detect::Emotion_Detect(QWidget *parent)
 	ui.video_status->setDisabled(true);
 	ui.predict_control->setDisabled(true);
 	video_is_detect=0;
+	is_show_landmark=0;
 
 	connect(timer,SIGNAL(timeout()),this,SLOT(startLoopSlot()));
 	connect(ui.choose_path, SIGNAL(clicked()), this, SLOT(getFileList()));
@@ -18,9 +19,9 @@ Emotion_Detect::Emotion_Detect(QWidget *parent)
 	connect(ui.but_capture,SIGNAL(clicked()),this,SLOT(but_capture()));
 	connect(ui.but_loadlbf,SIGNAL(clicked()),this,SLOT(but_loadmodel()));
 	connect(ui.but_start_detect,SIGNAL(clicked()),this,SLOT(but_start_detect()));
-	connect(ui.but_stop_detect,SIGNAL(clicked()),this,SLOT(but_stop_detect()));
-	
-	
+	connect(ui.but_show_landmark,SIGNAL(clicked()),this,SLOT(but_show_landmark()));
+
+
 
 }
 
@@ -47,7 +48,6 @@ void Emotion_Detect::getFileList()
 void Emotion_Detect::itemclick (QListWidgetItem *item)
 {
 	QString tppath = filePath;
-	video_is_detect=0;
 	tppath.append("/").append(item->text());
 	if (item->text().compare("##CAM")!=0&&item->text().lastIndexOf("avi")==-1)
 	{
@@ -63,13 +63,22 @@ void Emotion_Detect::itemclick (QListWidgetItem *item)
 		//QMessageBox::information(this,"helo",tppath);
 		frame_towrite=imread(tppath.toStdString());
 		double scale = 456*1.0/frame_towrite.rows;
-		Mat image2;
-		cv::resize(frame_towrite,image2,Size(frame_towrite.cols*scale,frame_towrite.rows*scale),0,0,CV_INTER_LINEAR);
 
-		cvtColor(image2, image2, CV_BGR2RGB); 
-		QImage *qJpg = new QImage((unsigned char*)image2.data, // uchar* data  
-			image2.cols, image2.rows, // width height
-			image2.step, //bytesPerLine  
+		cv::resize(frame_towrite,frame_towrite,Size(frame_towrite.cols*scale,frame_towrite.rows*scale),0,0,CV_INTER_LINEAR);
+		frame_with_landMark=frame_towrite.clone();
+
+		if (video_is_detect==1)
+		{
+			ui.label->setText(QString::fromStdString(LPredict.predict(frame_with_landMark)));
+		}
+		if (is_show_landmark)
+		{
+			frame_towrite=frame_with_landMark;
+		}
+		cvtColor(frame_towrite, frame_towrite, CV_BGR2RGB); 
+		QImage *qJpg = new QImage((unsigned char*)frame_towrite.data, // uchar* data  
+			frame_towrite.cols, frame_towrite.rows, // width height
+			frame_towrite.step, //bytesPerLine  
 			QImage::Format_RGB888); //format  
 		ui.picshow->setPixmap(QPixmap::fromImage(*qJpg));
 		ui.picshow->resize(qJpg->size());
@@ -141,19 +150,26 @@ void Emotion_Detect::startLoopSlot()
 		ui.video_status->setValue(current_frame++);
 	}
 
-	Mat frame;
 	cap >> frame_towrite; // get a new frame from camera
-	cvtColor(frame_towrite, frame, CV_BGR2RGB); 
-	qCam = new QImage((unsigned char*)frame.data, // uchar* data  
-		frame.cols, frame.rows, // width height  
-		frame.step, //bytesPerLine  
+	frame_with_landMark=frame_towrite.clone();
+		if (video_is_detect==1)
+	{
+		ui.label->setText(QString::fromStdString(LPredict.predict(frame_with_landMark)));
+	}
+			if (is_show_landmark)
+		{
+			frame_towrite=frame_with_landMark;
+		}
+
+	cvtColor(frame_towrite, frame_towrite, CV_BGR2RGB); 
+	qCam = new QImage((unsigned char*)frame_towrite.data, // uchar* data  
+		frame_towrite.cols, frame_towrite.rows, // width height  
+		frame_towrite.step, //bytesPerLine  
 		QImage::Format_RGB888); //format  
 	ui.picshow->setPixmap(QPixmap::fromImage(*qCam));
 	ui.picshow->resize(qCam->size());
-	if (video_is_detect==1)
-	{
-		ui.label->setText(QString::fromStdString(LPredict.predict(frame_towrite)));
-	}
+
+
 }
 
 void Emotion_Detect::slide_press()
@@ -172,27 +188,30 @@ void Emotion_Detect::slide_release()
 void Emotion_Detect::but_loadmodel()
 {
 	LPredict.loadModel();
+	ui.but_loadlbf->setText("Loaded!");
 }
 
 void Emotion_Detect::but_start_detect()
 {
-	if (captype==-1)
-	{
-		ui.label->setText(QString::fromStdString(LPredict.predict(frame_towrite)));
-	}
-	else
-		video_is_detect=1;
-	
+	video_is_detect=!video_is_detect;
+	QString str("Detect:");
+	str.append(QString::number(video_is_detect));
+	ui.but_start_detect->setText(str);
+
 }
 
 
-void Emotion_Detect::but_stop_detect()
+void Emotion_Detect::but_show_landmark()
 {
-	video_is_detect=0;
+	is_show_landmark=!is_show_landmark;
+	QString str("LandMark:");
+	str.append(QString::number(is_show_landmark));
+	ui.but_show_landmark->setText(str);
 }
 
 
 void Emotion_Detect::but_capture()
 {
 	ui.predict_control->setDisabled(false);
+	timer->stop();
 }

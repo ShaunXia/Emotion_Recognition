@@ -1,20 +1,19 @@
 #pragma once
 #include "LBFModel.h"
 
-
 #define POINT_WIDTH 480
 #define POINT_HEIGHT 640
-class LandmarkPredict
+
+class ImgLandMark
 {
 public:
-	LandmarkPredict(void);
-	~LandmarkPredict(void);
+	ImgLandMark(void);
+	~ImgLandMark(void);
+
 	LBF_model model;
 	string face_cascade_name;
-	int doPredict(vector<Point>&,CvSVM &SVM);
 	int getLandmark(Mat &,vector<Point> &);
-	string doPredictFACS(vector<Point>&);
-	string predict(Mat&);
+	string FACS_info(Mat&);
 	void landMarkInfo(vector<Point>&);
 	void loadModel();
 };

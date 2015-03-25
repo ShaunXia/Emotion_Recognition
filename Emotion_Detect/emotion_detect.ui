@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>555</width>
-    <height>619</height>
+    <height>637</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -99,8 +99,8 @@
    <widget class="QPushButton" name="but_capture">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>510</y>
+      <x>300</x>
+      <y>500</y>
       <width>75</width>
       <height>61</height>
      </rect>
@@ -118,7 +118,7 @@
       <x>10</x>
       <y>470</y>
       <width>161</width>
-      <height>141</height>
+      <height>161</height>
      </rect>
     </property>
     <property name="title">
@@ -146,9 +146,9 @@
        <string>Start Detect</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="but_stop_detect">
+     <widget class="QPushButton" name="but_show_landmark">
       <property name="text">
-       <string>Stop Detect</string>
+       <string>Show LandMark</string>
       </property>
      </widget>
     </widget>
@@ -156,8 +156,8 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>530</y>
+      <x>460</x>
+      <y>520</y>
       <width>54</width>
       <height>12</height>
      </rect>
