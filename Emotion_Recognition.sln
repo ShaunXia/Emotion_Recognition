@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Emotion_Train_Tool", "Emotion_Train_Tool\Emotion_Train_Tool.vcxproj", "{B12702AD-ABFB-343A-A199-8E24837244A3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Emotion_Train", "Emotion_Train\Emotion_Train.vcxproj", "{6370ABD5-5A05-469A-BA1C-7D00930D7ED7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Emotion_Detect", "Emotion_Detect\Emotion_Detect.vcxproj", "{54D62E9C-20F3-48A3-B282-8916198F53E3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|Win32.Build.0 = Debug|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|Win32.ActiveCfg = Release|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|Win32.Build.0 = Release|Win32
+		{6370ABD5-5A05-469A-BA1C-7D00930D7ED7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6370ABD5-5A05-469A-BA1C-7D00930D7ED7}.Debug|Win32.Build.0 = Debug|Win32
+		{6370ABD5-5A05-469A-BA1C-7D00930D7ED7}.Release|Win32.ActiveCfg = Release|Win32
+		{6370ABD5-5A05-469A-BA1C-7D00930D7ED7}.Release|Win32.Build.0 = Release|Win32
+		{54D62E9C-20F3-48A3-B282-8916198F53E3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{54D62E9C-20F3-48A3-B282-8916198F53E3}.Debug|Win32.Build.0 = Debug|Win32
+		{54D62E9C-20F3-48A3-B282-8916198F53E3}.Release|Win32.ActiveCfg = Release|Win32
+		{54D62E9C-20F3-48A3-B282-8916198F53E3}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
