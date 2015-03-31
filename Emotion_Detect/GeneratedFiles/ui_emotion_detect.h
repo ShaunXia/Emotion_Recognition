@@ -13,7 +13,6 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
@@ -25,6 +24,7 @@
 #include <QtWidgets/QScrollArea>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QSplitter>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -48,8 +48,9 @@ public:
     QPushButton *but_loadlbf;
     QPushButton *but_start_detect;
     QPushButton *but_show_landmark;
-    QCheckBox *check_landmark_withNum;
-    QLabel *label;
+    QGroupBox *group_result;
+    QWidget *verticalLayoutWidget;
+    QVBoxLayout *result_layout;
 
     void setupUi(QMainWindow *Emotion_DetectClass)
     {
@@ -116,7 +117,7 @@ public:
         gridLayout->setColumnStretch(1, 1);
         but_capture = new QPushButton(centralWidget);
         but_capture->setObjectName(QStringLiteral("but_capture"));
-        but_capture->setGeometry(QRect(300, 500, 75, 61));
+        but_capture->setGeometry(QRect(210, 490, 75, 61));
         predict_control = new QGroupBox(centralWidget);
         predict_control->setObjectName(QStringLiteral("predict_control"));
         predict_control->setEnabled(true);
@@ -134,12 +135,18 @@ public:
         but_show_landmark = new QPushButton(splitter);
         but_show_landmark->setObjectName(QStringLiteral("but_show_landmark"));
         splitter->addWidget(but_show_landmark);
-        check_landmark_withNum = new QCheckBox(predict_control);
-        check_landmark_withNum->setObjectName(QStringLiteral("check_landmark_withNum"));
-        check_landmark_withNum->setGeometry(QRect(10, 130, 131, 20));
-        label = new QLabel(centralWidget);
-        label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(460, 520, 54, 12));
+        group_result = new QGroupBox(centralWidget);
+        group_result->setObjectName(QStringLiteral("group_result"));
+        group_result->setGeometry(QRect(390, 470, 131, 161));
+        group_result->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+        verticalLayoutWidget = new QWidget(group_result);
+        verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
+        verticalLayoutWidget->setGeometry(QRect(10, 10, 111, 141));
+        result_layout = new QVBoxLayout(verticalLayoutWidget);
+        result_layout->setSpacing(6);
+        result_layout->setContentsMargins(11, 11, 11, 11);
+        result_layout->setObjectName(QStringLiteral("result_layout"));
+        result_layout->setContentsMargins(0, 0, 0, 0);
         Emotion_DetectClass->setCentralWidget(centralWidget);
 
         retranslateUi(Emotion_DetectClass);
@@ -156,8 +163,7 @@ public:
         but_loadlbf->setText(QApplication::translate("Emotion_DetectClass", "Load Model", 0));
         but_start_detect->setText(QApplication::translate("Emotion_DetectClass", "Start Detect", 0));
         but_show_landmark->setText(QApplication::translate("Emotion_DetectClass", "Show LandMark", 0));
-        check_landmark_withNum->setText(QApplication::translate("Emotion_DetectClass", "LandMark with Num", 0));
-        label->setText(QApplication::translate("Emotion_DetectClass", "TextLabel", 0));
+        group_result->setTitle(QApplication::translate("Emotion_DetectClass", "Result", 0));
     } // retranslateUi
 
 };

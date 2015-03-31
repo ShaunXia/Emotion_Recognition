@@ -1,6 +1,6 @@
 #include "LandmarkPredict.h"
-
-
+#include "qdebug.h"
+#include "qstring.h"
 LandmarkPredict::LandmarkPredict(void)
 {
 
@@ -21,36 +21,19 @@ LandmarkPredict::~LandmarkPredict(void)
 {
 }
 
-string LandmarkPredict::predict(Mat &input)
+int LandmarkPredict::predict(Mat &input)
 {
 	vector<Point> face_landmark_fixed;
 	if (getLandmark(input,face_landmark_fixed)==-1)
 	{
-		return "NoneFace";
+		return -1;
 	}
 
 	//SVM predict
 	CvSVM SVM;
 	SVM.load("svm_model_yale");
-
 	int eresult=doPredict(face_landmark_fixed,SVM);
-
-	string num2emo[4];
-	//
-	ifstream map_file("ecode_map.txt");
-	while (!map_file.eof())
-	{
-		int ecode;
-		string estring;
-		map_file>>estring>>ecode;
-		num2emo[ecode]=estring;
-	}
-	map_file.close();
-
-	return num2emo[eresult];
-
-
-
+	return eresult;
 }
 string LandmarkPredict::doPredictFACS(vector<Point> &vec_landmark)
 {

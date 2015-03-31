@@ -10,6 +10,26 @@ Emotion_Detect::Emotion_Detect(QWidget *parent)
 	ui.predict_control->setDisabled(true);
 	video_is_detect=0;
 	is_show_landmark=0;
+	
+	string num2emo[100];
+	ifstream map_file("ecode_map.txt");
+	int tpcount=0;
+	while (!map_file.eof())
+	{
+		int ecode;
+		string estring;
+		map_file>>estring>>ecode;
+		num2emo[ecode]= estring;
+		QString st = QString::fromStdString(estring);
+		st.append(" - ");
+		st.append(QString::number(ecode));
+		vec_qlabel.push_back(new QLabel(st));
+		vec_qlabel[tpcount]->setStyleSheet(QStringLiteral("font: 75 14pt 'Arial';color: black;"));
+		ui.result_layout->addWidget(vec_qlabel[tpcount++]);
+		
+	}
+	map_file.close();
+
 
 	connect(timer,SIGNAL(timeout()),this,SLOT(startLoopSlot()));
 	connect(ui.choose_path, SIGNAL(clicked()), this, SLOT(getFileList()));
@@ -47,6 +67,11 @@ void Emotion_Detect::getFileList()
 
 void Emotion_Detect::itemclick (QListWidgetItem *item)
 {
+	for (int i = 0; i < vec_qlabel.size(); i++)
+	{
+		vec_qlabel[i]->setStyleSheet(QStringLiteral("font: 75 14pt 'Arial';color: black;"));
+	}
+			
 	QString tppath = filePath;
 	tppath.append("/").append(item->text());
 	if (item->text().compare("##CAM")!=0&&item->text().lastIndexOf("avi")==-1)
@@ -69,7 +94,12 @@ void Emotion_Detect::itemclick (QListWidgetItem *item)
 
 		if (video_is_detect==1)
 		{
-			ui.label->setText(QString::fromStdString(LPredict.predict(frame_with_landMark)));
+			int res=LPredict.predict(frame_with_landMark);
+			if (res!=-1)
+			{
+				vec_qlabel[res]->setStyleSheet(QStringLiteral("font: 75 14pt 'Arial';color: rgb(255, 0, 0);"));
+			}
+			
 		}
 		if (is_show_landmark)
 		{
@@ -140,6 +170,10 @@ void Emotion_Detect::itemclick (QListWidgetItem *item)
 
 void Emotion_Detect::startLoopSlot()
 {
+	for (int i = 0; i < vec_qlabel.size(); i++)
+	{
+		vec_qlabel[i]->setStyleSheet(QStringLiteral("font: 75 14pt 'Arial';color: black;"));
+	}
 	if (captype==1)
 	{
 		if (current_frame==ui.video_status->maximum())
@@ -154,7 +188,12 @@ void Emotion_Detect::startLoopSlot()
 	frame_with_landMark=frame_towrite.clone();
 		if (video_is_detect==1)
 	{
-		ui.label->setText(QString::fromStdString(LPredict.predict(frame_with_landMark)));
+			int res=LPredict.predict(frame_with_landMark);
+			if (res!=-1)
+			{
+				vec_qlabel[res]->setStyleSheet(QStringLiteral("font: 75 14pt 'Arial';color: red;"));
+			}
+			
 	}
 			if (is_show_landmark)
 		{

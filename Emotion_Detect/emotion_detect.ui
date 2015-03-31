@@ -99,8 +99,8 @@
    <widget class="QPushButton" name="but_capture">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>500</y>
+      <x>210</x>
+      <y>490</y>
       <width>75</width>
       <height>61</height>
      </rect>
@@ -153,18 +153,36 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QGroupBox" name="group_result">
     <property name="geometry">
      <rect>
-      <x>460</x>
-      <y>520</y>
-      <width>54</width>
-      <height>12</height>
+      <x>390</x>
+      <y>470</y>
+      <width>131</width>
+      <height>161</height>
      </rect>
     </property>
-    <property name="text">
-     <string>TextLabel</string>
+    <property name="title">
+     <string>Result</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+    <widget class="QWidget" name="verticalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>111</width>
+       <height>141</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="result_layout">
+      <property name="spacing">
+       <number>3</number>
+      </property>
+     </layout>
+    </widget>
    </widget>
   </widget>
  </widget>

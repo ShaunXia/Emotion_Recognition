@@ -49,6 +49,10 @@ public:
 	void but_detect_trigger();
 	void but_facs_info();
 
+	double vec_angle(Point vc1,Point vc2); 
+	double point_distance(Point p1,Point p2);
+	int face_vector_result(vector<Point> point);
+
 private:
 	Ui::Emotion_Train_ToolClass ui;
 	QString filePath;
@@ -62,6 +66,8 @@ private:
 
 	int isdetect;
 	ImgLandMark landmark;
+	int is_model_loaded;
+
 };
 
 #endif // EMOTION_TRAIN_TOOL_H

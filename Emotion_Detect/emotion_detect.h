@@ -51,6 +51,9 @@ private:
 	LandmarkPredict LPredict;
 	int video_is_detect;
 	int is_show_landmark;
+
+	QVector<QLabel*> vec_qlabel;
+
 };
 
 #endif // EMOTION_DETECT_H

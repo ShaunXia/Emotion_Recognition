@@ -152,6 +152,7 @@ int ImgLandMark::getLandmark(Mat &frame,vector<Point> &vec_landmark)
 			putText( landMark_face_fixed, words, center, CV_FONT_HERSHEY_SIMPLEX, 0.5, Scalar(255, 0, 0));
 
 			imshow("landMark_face_fixed", landMark_face_fixed);
+			
 		}
 	}
 	return 1;

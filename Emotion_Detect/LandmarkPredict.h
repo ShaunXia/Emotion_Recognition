@@ -14,7 +14,7 @@ public:
 	int doPredict(vector<Point>&,CvSVM &SVM);
 	int getLandmark(Mat &,vector<Point> &);
 	string doPredictFACS(vector<Point>&);
-	string predict(Mat&);
+	int predict(Mat&);
 	void landMarkInfo(vector<Point>&);
 	void loadModel();
 };

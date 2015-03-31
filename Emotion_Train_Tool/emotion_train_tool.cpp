@@ -11,6 +11,7 @@ Emotion_Train_Tool::Emotion_Train_Tool(QWidget *parent)
 	ui.group_emotion->setDisabled(true);
 	ui.group_facs->setDisabled(true);
 	isdetect=0;
+	is_model_loaded=0;
 
 	connect(timer,SIGNAL(timeout()),this,SLOT(startLoopSlot()));
 	connect(ui.choose_path, SIGNAL(clicked()), this, SLOT(getFileList()));
@@ -40,6 +41,9 @@ void Emotion_Train_Tool::getFileList()
 	ui.fileList->clear();
 	filePath = QFileDialog::getExistingDirectory(NULL, tr("Ñ¡ÔñÎÄ¼þ¼Ð"),"D:\\",QFileDialog::ShowDirsOnly);
 	QDir dir(filePath);
+	QStringList filters;
+	filters<<QString("*.jpg")<<QString("*.png")<<QString("*.bmp")<<QString("*.avi");
+	dir.setNameFilters(filters);
 	QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
 	for (int i = 0; i < list.size(); i++)
 	{
@@ -249,6 +253,7 @@ void Emotion_Train_Tool::but_load_model()
 {
 	landmark.loadModel();
 	ui.but_load_model->setText("Loaded!");
+	is_model_loaded=1;
 }
 void Emotion_Train_Tool::but_detect_trigger()
 {
@@ -259,18 +264,23 @@ void Emotion_Train_Tool::but_detect_trigger()
 }
 void Emotion_Train_Tool::but_facs_info()
 {
+	if (is_model_loaded==0)
+	{
+		but_load_model();
+	}
+	ofstream log_out("out.txt");
 	for (int i = 1; i < ui.fileList->count(); i++)
 	{
 		QString tppath = filePath;
 		tppath.append("/").append(ui.fileList->item(i)->text());
-		
+
 		frame_tolandmark=imread(tppath.toStdString());
 		double scale = 456*1.0/frame_tolandmark.rows;
 		cv::resize(frame_tolandmark,frame_tolandmark,Size(frame_tolandmark.cols*scale,frame_tolandmark.rows*scale),0,0,CV_INTER_LINEAR);
 		vector<Point> tp;
 		frame_towrite=frame_tolandmark.clone();
-		
-		
+
+
 		cvtColor(frame_tolandmark, frame_tolandmark, CV_BGR2RGB); 
 		QImage *qJpg = new QImage((unsigned char*)frame_tolandmark.data, // uchar* data  
 			frame_tolandmark.cols, frame_tolandmark.rows, // width height
@@ -280,19 +290,77 @@ void Emotion_Train_Tool::but_facs_info()
 		ui.picshow->resize(qJpg->size());
 
 		landmark.getLandmark(frame_tolandmark,tp);
+
 		if (tp.size()!=0)
 		{
-			double dis = sqrt((tp[33].x-tp[30].x)*(tp[33].x-tp[30].x)+(tp[33].y-tp[30].y)*(tp[33].y-tp[30].y));
-
-		ui.log_facs_info->insertPlainText(QString::number(dis));
-		//ui.log_facs_info->insertPlainText(dis);
-		ui.log_facs_info->insertPlainText("\n");
+			face_vector_result(tp);
 		}
 		else
 			ui.log_facs_info->insertPlainText("no face \n");
-		
 		waitKey(0);
 
-
 	}
+}
+
+double Emotion_Train_Tool::vec_angle( Point vc1,Point vc2 )  
+{  
+	double dx1 = vc1.x;
+	double dy1 = vc1.y;
+	double dx2 = vc2.x;
+	double dy2 = vc2.y;
+	return acos((dx1*dx2 + dy1*dy2)/sqrt((dx1*dx1 + dy1*dy1)*(dx2*dx2 + dy2*dy2) + 1e-10))/3.14159*180;  
+}  
+
+double Emotion_Train_Tool::point_distance(Point vc1,Point vc2)
+{
+	return sqrt((vc1.x-vc2.x)*(vc1.x-vc2.x)+(vc1.y-vc2.y)*(vc1.y-vc2.y));
+}
+
+int Emotion_Train_Tool::face_vector_result(vector<Point> point)
+{
+
+
+	double dis = sqrt((point[33].x-point[30].x)*(point[33].x-point[30].x)+(point[33].y-point[30].y)*(point[33].y-point[30].y));
+
+	Point vec1,vec2,vec3,vec4;
+	Point vec_vertical,vec_horizontal;
+	vec_vertical.x=0;
+	vec_vertical.y=10;
+	vec_horizontal.x=10;
+	vec_horizontal.y=0;
+
+	vec1=point[60]-point[48];       //      /    /       \    \   
+	vec2=point[54]-point[64];       //   vec1  vec3    vec4   vcc2
+	vec3=point[31]-point[28];
+	vec4=point[35]-point[28];
+
+	if (point[48].y<point[60].y)
+	{
+		ui.log_facs_info->insertPlainText("\nHappy 1");
+	}
+	else
+	{
+		ui.log_facs_info->insertPlainText("\nHappy 0");
+	}
+
+	double dot1,dot2,dou3,dot4;
+
+	double dis_60_49 = point_distance(point[60],point[49]);
+	double dis_60_59 = point_distance(point[60],point[59]);
+	if (dis_60_59>dis_60_49+5)
+	{
+		ui.log_facs_info->insertPlainText(" 1");
+	}
+	else
+	{
+		ui.log_facs_info->insertPlainText(" 0");
+	}
+
+	double aacos = vec_angle(vec1,vec_horizontal);
+
+	ui.log_facs_info->insertPlainText("\nAngle: ");
+	ui.log_facs_info->insertPlainText(QString::number(aacos));
+	ui.log_facs_info->insertPlainText("\n");
+	double dot_28_54=point[28].dot(point[54]);
+	return 0;
 }
