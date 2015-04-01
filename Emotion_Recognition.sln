@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Emotion_Train", "Emotion_Tr
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Emotion_Detect", "Emotion_Detect\Emotion_Detect.vcxproj", "{54D62E9C-20F3-48A3-B282-8916198F53E3}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cv_Test", "cv_Test\cv_Test.vcxproj", "{34A58E16-0720-41C9-A143-24C3F62A6572}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -25,6 +27,10 @@ Global
 		{54D62E9C-20F3-48A3-B282-8916198F53E3}.Debug|Win32.Build.0 = Debug|Win32
 		{54D62E9C-20F3-48A3-B282-8916198F53E3}.Release|Win32.ActiveCfg = Release|Win32
 		{54D62E9C-20F3-48A3-B282-8916198F53E3}.Release|Win32.Build.0 = Release|Win32
+		{34A58E16-0720-41C9-A143-24C3F62A6572}.Debug|Win32.ActiveCfg = Debug|Win32
+		{34A58E16-0720-41C9-A143-24C3F62A6572}.Debug|Win32.Build.0 = Debug|Win32
+		{34A58E16-0720-41C9-A143-24C3F62A6572}.Release|Win32.ActiveCfg = Release|Win32
+		{34A58E16-0720-41C9-A143-24C3F62A6572}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

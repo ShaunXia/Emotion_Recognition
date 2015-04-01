@@ -143,6 +143,10 @@ void Emotion_Train_Tool::itemclick (QListWidgetItem *item)
 
 void Emotion_Train_Tool::startLoopSlot()
 {
+	if (captype==-1)
+	{
+		return;
+	}
 	if (captype==1)
 	{
 		if (current_frame==ui.video_status->maximum())
@@ -192,7 +196,7 @@ void Emotion_Train_Tool::but_capture()
 void Emotion_Train_Tool::but_happy()
 {
 	QDateTime time = QDateTime::currentDateTime();
-	QString str("happy#");
+	QString str(".\\output\\happy#");
 	str.append(time.toString("MMdd_hh_mm_ss"));
 	str.append(".jpg");
 	imwrite(str.toStdString(),frame_towrite);
@@ -206,7 +210,7 @@ void Emotion_Train_Tool::but_happy()
 void Emotion_Train_Tool::but_normal()
 {
 	QDateTime time = QDateTime::currentDateTime();
-	QString str("normal#");
+	QString str(".\\output\\normal#");
 	str.append(time.toString("MMdd_hh_mm_ss"));
 	str.append(".jpg");
 	imwrite(str.toStdString(),frame_towrite);
@@ -220,7 +224,7 @@ void Emotion_Train_Tool::but_normal()
 void Emotion_Train_Tool::but_sleepy()
 {
 	QDateTime time = QDateTime::currentDateTime();
-	QString str("sleepy#");
+	QString str(".\\output\\sleepy#");
 	str.append(time.toString("MMdd_hh_mm_ss"));
 	str.append(".jpg");
 	imwrite(str.toStdString(),frame_towrite);

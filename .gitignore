@@ -232,3 +232,5 @@ $RECYCLE.BIN/
 
 shape_1.dat
 haarcascade_frontalface_alt.xml
+
+output/

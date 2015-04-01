@@ -143,7 +143,7 @@ public:
         verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
         verticalLayoutWidget->setGeometry(QRect(10, 10, 111, 141));
         result_layout = new QVBoxLayout(verticalLayoutWidget);
-        result_layout->setSpacing(6);
+        result_layout->setSpacing(3);
         result_layout->setContentsMargins(11, 11, 11, 11);
         result_layout->setObjectName(QStringLiteral("result_layout"));
         result_layout->setContentsMargins(0, 0, 0, 0);
