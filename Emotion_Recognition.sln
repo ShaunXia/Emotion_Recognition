@@ -12,27 +12,42 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
 		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|Win32.ActiveCfg = Debug|Win32
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|Win32.Build.0 = Debug|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|x64.ActiveCfg = Debug|Win32
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|Win32.ActiveCfg = Release|Win32
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|Win32.Build.0 = Release|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|x64.ActiveCfg = Release|Win32
 		{6370ABD5-5A05-469A-BA1C-7D00930D7ED7}.Debug|Win32.ActiveCfg = Debug|Win32
 		{6370ABD5-5A05-469A-BA1C-7D00930D7ED7}.Debug|Win32.Build.0 = Debug|Win32
+		{6370ABD5-5A05-469A-BA1C-7D00930D7ED7}.Debug|x64.ActiveCfg = Debug|x64
+		{6370ABD5-5A05-469A-BA1C-7D00930D7ED7}.Debug|x64.Build.0 = Debug|x64
 		{6370ABD5-5A05-469A-BA1C-7D00930D7ED7}.Release|Win32.ActiveCfg = Release|Win32
 		{6370ABD5-5A05-469A-BA1C-7D00930D7ED7}.Release|Win32.Build.0 = Release|Win32
+		{6370ABD5-5A05-469A-BA1C-7D00930D7ED7}.Release|x64.ActiveCfg = Release|x64
+		{6370ABD5-5A05-469A-BA1C-7D00930D7ED7}.Release|x64.Build.0 = Release|x64
 		{54D62E9C-20F3-48A3-B282-8916198F53E3}.Debug|Win32.ActiveCfg = Debug|Win32
 		{54D62E9C-20F3-48A3-B282-8916198F53E3}.Debug|Win32.Build.0 = Debug|Win32
+		{54D62E9C-20F3-48A3-B282-8916198F53E3}.Debug|x64.ActiveCfg = Debug|Win32
 		{54D62E9C-20F3-48A3-B282-8916198F53E3}.Release|Win32.ActiveCfg = Release|Win32
 		{54D62E9C-20F3-48A3-B282-8916198F53E3}.Release|Win32.Build.0 = Release|Win32
+		{54D62E9C-20F3-48A3-B282-8916198F53E3}.Release|x64.ActiveCfg = Release|Win32
 		{34A58E16-0720-41C9-A143-24C3F62A6572}.Debug|Win32.ActiveCfg = Debug|Win32
 		{34A58E16-0720-41C9-A143-24C3F62A6572}.Debug|Win32.Build.0 = Debug|Win32
+		{34A58E16-0720-41C9-A143-24C3F62A6572}.Debug|x64.ActiveCfg = Debug|Win32
 		{34A58E16-0720-41C9-A143-24C3F62A6572}.Release|Win32.ActiveCfg = Release|Win32
 		{34A58E16-0720-41C9-A143-24C3F62A6572}.Release|Win32.Build.0 = Release|Win32
+		{34A58E16-0720-41C9-A143-24C3F62A6572}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

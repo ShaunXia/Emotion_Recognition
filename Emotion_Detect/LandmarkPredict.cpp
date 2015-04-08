@@ -15,10 +15,56 @@ void LandmarkPredict::loadModel()
 		cout<<"Can not load the file!"<<endl;
 		return;
 	}
+	
+
+	SVM.load("model/svm_model_pca");
+	pca.eigenvalues=loadMat("model/pca_eigenvalues");
+	pca.eigenvectors=loadMat("model/pca_eigenvectors");
+	pca.mean=loadMat("model/pca_mean");
+	lda.load("model/lda_data");
 }
 
 LandmarkPredict::~LandmarkPredict(void)
 {
+}
+
+Mat LandmarkPredict::loadMat(string mat_name)
+{
+
+	float one_float;
+	ifstream mat_file(mat_name);
+	vector<float> vec;
+	int mat_row,mat_col;
+	char spacer;
+	mat_row=0;
+	mat_col=0;
+	int getcol=0;
+	mat_file.get(spacer);
+	while(spacer!=']')
+	{
+		mat_file>>one_float;mat_file.get(spacer);
+		vec.push_back(one_float);
+		if (!getcol)
+		{
+			mat_col++;
+		}
+		if (spacer==';'||spacer==']')
+		{
+			getcol=1;
+			mat_row++;
+		}
+	}
+	mat_file.close();
+	Mat ou(mat_row,mat_col,CV_32FC1);
+	for (int i = 0; i < ou.rows; i++)
+	{
+		for (int j = 0; j  < ou.cols; j ++)
+		{
+			ou.at<float>(i,j)=vec[i*ou.cols+j];
+		}
+	}
+
+	return ou;
 }
 
 int LandmarkPredict::predict(Mat &input)
@@ -28,11 +74,8 @@ int LandmarkPredict::predict(Mat &input)
 	{
 		return -1;
 	}
+	int eresult=doPredict(face_landmark_fixed,SVM,pca,lda);
 
-	//SVM predict
-	CvSVM SVM;
-	SVM.load("svm_model_yale");
-	int eresult=doPredict(face_landmark_fixed,SVM);
 	return eresult;
 }
 string LandmarkPredict::doPredictFACS(vector<Point> &vec_landmark)
@@ -45,7 +88,7 @@ void LandmarkPredict::landMarkInfo(vector<Point>& input)
 
 }
 
-int LandmarkPredict::getLandmark(Mat &frame,vector<Point> &vec_landmark)
+int LandmarkPredict::getLandmark(Mat frame,vector<Point> &vec_landmark)
 {
 	int max_point_x,min_point_x,max_point_y,min_point_y;
 	double box[4];
@@ -84,8 +127,8 @@ int LandmarkPredict::getLandmark(Mat &frame,vector<Point> &vec_landmark)
 				max_point_y=parts[j].y;
 			if (min_point_y>parts[j].y)
 				min_point_y=parts[j].y;
-			Point center( parts[j].x, parts[j].y ); 
-			ellipse( frame, center, Size( 1, 1), 0, 0, 0, Scalar( 255, 0, 255 ), 4, 8, 0); 
+			//Point center( parts[j].x, parts[j].y ); 
+			//ellipse( frame, center, Size( 1, 1), 0, 0, 0, Scalar( 255, 0, 255 ), 4, 8, 0); 
 			/*
 			char c[3];
 			sprintf(c, "%d", j);
@@ -149,19 +192,21 @@ int LandmarkPredict::getLandmark(Mat &frame,vector<Point> &vec_landmark)
 			center.y = ny+gy;
 
 			vec_landmark.push_back(center);
+			/*
 			ellipse( landMark_face_fixed, center, Size( 1, 1), 0, 0, 0, Scalar( 255, 255, 255 ), 4, 8, 0 ); 
 			char c[3];
 			sprintf(c, "%d", j);
 			string words= c;  
 			putText( landMark_face_fixed, words, center, CV_FONT_HERSHEY_SIMPLEX, 0.5, Scalar(255, 0, 0));
 
-			imshow("landMark_face_fixed", landMark_face_fixed);
+			imshow("neutral", landMark_face_fixed);
+			*/
 		}
 	}
 	return 1;
 }
 
-int LandmarkPredict::doPredict(vector<Point> &vec_landmark,CvSVM &SVM)
+int LandmarkPredict::doPredict(vector<Point> &vec_landmark,CvSVM &SVM,PCA &pca,LDA &lda)
 {
 	vector<Point> point_eyebrow;
 	vector<Point> point_leye;
@@ -289,11 +334,13 @@ int LandmarkPredict::doPredict(vector<Point> &vec_landmark,CvSVM &SVM)
 	}
 
 	Mat current_test_mat(1,vec_all.size(),CV_32FC1);
+	
 	for (int j = 0; j < vec_all.size(); j++)
 	{
 		current_test_mat.at<float>(0,j)=vec_all[j];
 	}
 
-	return SVM.predict(current_test_mat);
+	Mat dst = pca.project(current_test_mat);
+	return SVM.predict(dst);
 
 }

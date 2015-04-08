@@ -96,19 +96,6 @@
      </item>
     </layout>
    </widget>
-   <widget class="QPushButton" name="but_capture">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>490</y>
-      <width>75</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Capture</string>
-    </property>
-   </widget>
    <widget class="QGroupBox" name="predict_control">
     <property name="enabled">
      <bool>true</bool>
@@ -182,6 +169,45 @@
        <number>3</number>
       </property>
      </layout>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>480</y>
+      <width>141</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>GroupBox</string>
+    </property>
+    <widget class="QPushButton" name="pushButton">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>70</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="but_capture">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>20</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Capture</string>
+     </property>
     </widget>
    </widget>
   </widget>

@@ -7,12 +7,13 @@ Emotion_Detect::Emotion_Detect(QWidget *parent)
 	timer = new QTimer(this);
 	timer->setInterval(60);
 	ui.video_status->setDisabled(true);
-	ui.predict_control->setDisabled(true);
+	//ui.predict_control->setDisabled(true);
 	video_is_detect=0;
 	is_show_landmark=0;
-	
+	get_neutral=0;
+	neutral_face=Mat::zeros(640,780,CV_32FC1);
 	string num2emo[100];
-	ifstream map_file("ecode_map.txt");
+	ifstream map_file("model/ecode_map.txt");
 	int tpcount=0;
 	while (!map_file.eof())
 	{
@@ -26,7 +27,7 @@ Emotion_Detect::Emotion_Detect(QWidget *parent)
 		vec_qlabel.push_back(new QLabel(st));
 		vec_qlabel[tpcount]->setStyleSheet(QStringLiteral("font: 75 14pt 'Arial';color: black;"));
 		ui.result_layout->addWidget(vec_qlabel[tpcount++]);
-		
+
 	}
 	map_file.close();
 
@@ -71,7 +72,7 @@ void Emotion_Detect::itemclick (QListWidgetItem *item)
 	{
 		vec_qlabel[i]->setStyleSheet(QStringLiteral("font: 75 14pt 'Arial';color: black;"));
 	}
-			
+
 	QString tppath = filePath;
 	tppath.append("/").append(item->text());
 	if (item->text().compare("##CAM")!=0&&item->text().lastIndexOf("avi")==-1)
@@ -99,7 +100,7 @@ void Emotion_Detect::itemclick (QListWidgetItem *item)
 			{
 				vec_qlabel[res]->setStyleSheet(QStringLiteral("font: 75 14pt 'Arial';color: rgb(255, 0, 0);"));
 			}
-			
+
 		}
 		if (is_show_landmark)
 		{
@@ -136,8 +137,8 @@ void Emotion_Detect::itemclick (QListWidgetItem *item)
 					return ;
 				timer->start();
 			}
-			cap.set(CV_CAP_PROP_FRAME_WIDTH,480);
-			cap.set(CV_CAP_PROP_FRAME_HEIGHT,320);
+			cap.set(CV_CAP_PROP_FRAME_WIDTH,320);
+			cap.set(CV_CAP_PROP_FRAME_HEIGHT,160);
 		}
 
 		else // AVI file
@@ -170,6 +171,7 @@ void Emotion_Detect::itemclick (QListWidgetItem *item)
 
 void Emotion_Detect::startLoopSlot()
 {
+	current_landMark.clear();
 	for (int i = 0; i < vec_qlabel.size(); i++)
 	{
 		vec_qlabel[i]->setStyleSheet(QStringLiteral("font: 75 14pt 'Arial';color: black;"));
@@ -186,25 +188,44 @@ void Emotion_Detect::startLoopSlot()
 
 	cap >> frame_towrite; // get a new frame from camera
 	frame_with_landMark=frame_towrite.clone();
-		if (video_is_detect==1)
+	cap_input=frame_towrite.clone();
+	if (video_is_detect==1)
 	{
-			int res=LPredict.predict(frame_with_landMark);
-			if (res!=-1)
-			{
-				vec_qlabel[res]->setStyleSheet(QStringLiteral("font: 75 14pt 'Arial';color: red;"));
-			}
-			
-	}
-			if (is_show_landmark)
+		LPredict.getLandmark(cap_input,current_landMark);
+		int res=LPredict.predict(frame_with_landMark);
+		if (res!=-1)
 		{
-			frame_towrite=frame_with_landMark;
+			vec_qlabel[res]->setStyleSheet(QStringLiteral("font: 75 14pt 'Arial';color: red;"));
 		}
 
+	}
+	if (is_show_landmark)
+	{
+		LPredict.getLandmark(frame_with_landMark,current_landMark);
+		frame_towrite=frame_with_landMark;
+	}
+
+	Mat new_face= neutral_face.clone();
+	for (int i = 0; i < current_landMark.size(); i++)
+	{
+		//show_neutral.at<float>(neutral_landMark[i].x,neutral_landMark[i].x);
+		Point center;
+		if (get_neutral)
+		{
+			Point pt=neutral_landMark[27]-current_landMark[27];
+			center=Point( current_landMark[i].x+pt.x, current_landMark[i].y+pt.y ); 
+		}
+		else
+			center=Point( current_landMark[i].x, current_landMark[i].y ); 
+		ellipse( new_face, center, Size( 1, 1), 0, 0, 0, Scalar( 255), 4, 8, 0); 
+	}
+	imshow("neutral",new_face);
+	waitKey(30);
 	cvtColor(frame_towrite, frame_towrite, CV_BGR2RGB); 
 	qCam = new QImage((unsigned char*)frame_towrite.data, // uchar* data  
 		frame_towrite.cols, frame_towrite.rows, // width height  
 		frame_towrite.step, //bytesPerLine  
-		QImage::Format_RGB888); //format  
+		QImage::Format_RGB888); //format
 	ui.picshow->setPixmap(QPixmap::fromImage(*qCam));
 	ui.picshow->resize(qCam->size());
 
@@ -251,6 +272,18 @@ void Emotion_Detect::but_show_landmark()
 
 void Emotion_Detect::but_capture()
 {
-	ui.predict_control->setDisabled(false);
+	get_neutral=1;
+	neutral_landMark.clear();
 	timer->stop();
+	LPredict.getLandmark(cap_input,neutral_landMark);
+	neutral_face=Mat::zeros(640,780,CV_32FC1);
+	for (int i = 0; i < neutral_landMark.size(); i++)
+	{
+		//show_neutral.at<float>(neutral_landMark[i].x,neutral_landMark[i].x);
+		Point center( neutral_landMark[i].x, neutral_landMark[i].y ); 
+		ellipse( neutral_face, center, Size( 1, 1), 0, 0, 0, Scalar( 255, 0, 255 ), 4, 8, 0); 
+	}
+	imshow("neutral",neutral_face);
+	timer->start();
+	waitKey(0);
 }

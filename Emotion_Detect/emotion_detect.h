@@ -45,6 +45,9 @@ private:
 	QTimer *timer;
 	Mat frame_towrite;
 	Mat frame_with_landMark;
+	Mat cap_input;
+	Mat neutral_face;
+
 	VideoCapture cap;
 	int captype;
 	int current_frame;
@@ -52,7 +55,12 @@ private:
 	int video_is_detect;
 	int is_show_landmark;
 
+
 	QVector<QLabel*> vec_qlabel;
+	vector<Point> neutral_landMark;
+	vector<Point> current_landMark;
+
+	int get_neutral;
 
 };
 

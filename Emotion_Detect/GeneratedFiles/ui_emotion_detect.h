@@ -42,7 +42,6 @@ public:
     QWidget *scrollAreaWidgetContents_2;
     QHBoxLayout *horizontalLayout;
     QLabel *picshow;
-    QPushButton *but_capture;
     QGroupBox *predict_control;
     QSplitter *splitter;
     QPushButton *but_loadlbf;
@@ -51,6 +50,9 @@ public:
     QGroupBox *group_result;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *result_layout;
+    QGroupBox *groupBox;
+    QPushButton *pushButton;
+    QPushButton *but_capture;
 
     void setupUi(QMainWindow *Emotion_DetectClass)
     {
@@ -115,9 +117,6 @@ public:
 
         gridLayout->setColumnStretch(0, 3);
         gridLayout->setColumnStretch(1, 1);
-        but_capture = new QPushButton(centralWidget);
-        but_capture->setObjectName(QStringLiteral("but_capture"));
-        but_capture->setGeometry(QRect(210, 490, 75, 61));
         predict_control = new QGroupBox(centralWidget);
         predict_control->setObjectName(QStringLiteral("predict_control"));
         predict_control->setEnabled(true);
@@ -147,6 +146,15 @@ public:
         result_layout->setContentsMargins(11, 11, 11, 11);
         result_layout->setObjectName(QStringLiteral("result_layout"));
         result_layout->setContentsMargins(0, 0, 0, 0);
+        groupBox = new QGroupBox(centralWidget);
+        groupBox->setObjectName(QStringLiteral("groupBox"));
+        groupBox->setGeometry(QRect(210, 480, 141, 151));
+        pushButton = new QPushButton(groupBox);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setGeometry(QRect(30, 70, 81, 31));
+        but_capture = new QPushButton(groupBox);
+        but_capture->setObjectName(QStringLiteral("but_capture"));
+        but_capture->setGeometry(QRect(30, 20, 81, 31));
         Emotion_DetectClass->setCentralWidget(centralWidget);
 
         retranslateUi(Emotion_DetectClass);
@@ -158,12 +166,14 @@ public:
     {
         Emotion_DetectClass->setWindowTitle(QApplication::translate("Emotion_DetectClass", "Emotion_Detect", 0));
         choose_path->setText(QApplication::translate("Emotion_DetectClass", "Choose Path", 0));
-        but_capture->setText(QApplication::translate("Emotion_DetectClass", "Capture", 0));
         predict_control->setTitle(QApplication::translate("Emotion_DetectClass", "Predict", 0));
         but_loadlbf->setText(QApplication::translate("Emotion_DetectClass", "Load Model", 0));
         but_start_detect->setText(QApplication::translate("Emotion_DetectClass", "Start Detect", 0));
         but_show_landmark->setText(QApplication::translate("Emotion_DetectClass", "Show LandMark", 0));
         group_result->setTitle(QApplication::translate("Emotion_DetectClass", "Result", 0));
+        groupBox->setTitle(QApplication::translate("Emotion_DetectClass", "GroupBox", 0));
+        pushButton->setText(QApplication::translate("Emotion_DetectClass", "PushButton", 0));
+        but_capture->setText(QApplication::translate("Emotion_DetectClass", "Capture", 0));
     } // retranslateUi
 
 };
