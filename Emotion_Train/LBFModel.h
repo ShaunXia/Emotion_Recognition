@@ -116,6 +116,7 @@ std::vector<float>& get_delta_shape(regression_tree_load& tree,const std::vector
 
 void change_shape(std::vector<float>& current_shape, std::vector<float>& delta_shape);
 
+
 template <typename image_type>
 void calculate_shape(image_type& img, double* rect, LBF_model& model, std::vector<point<double> >& parts)
 {
