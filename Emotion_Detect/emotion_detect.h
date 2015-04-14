@@ -37,15 +37,18 @@ public:
 	void but_loadmodel();
 	void but_start_detect();
 	void but_show_landmark();
+	void but_tri();
 
 private:
 	Ui::Emotion_DetectClass ui;
 	QString filePath;
 	QImage *qCam;
 	QTimer *timer;
-	Mat frame_towrite;
+
+	Mat frame_ori;
 	Mat frame_with_landMark;
-	Mat cap_input;
+	//Mat frame_with_nolandMark;
+	Mat frame_forQTshow;
 	Mat neutral_face;
 
 	VideoCapture cap;
@@ -58,9 +61,12 @@ private:
 
 	QVector<QLabel*> vec_qlabel;
 	vector<Point> neutral_landMark;
+	vector<Point> neutral_landMark_fixed;
 	vector<Point> current_landMark;
+	vector<Point> current_landMark_fixed;
 
 	int get_neutral;
+	void draw_subdiv( Mat& img, Subdiv2D& subdiv, Scalar delaunay_color );
 
 };
 

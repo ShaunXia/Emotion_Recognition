@@ -67,10 +67,11 @@ Mat LandmarkPredict::loadMat(string mat_name)
 	return ou;
 }
 
-int LandmarkPredict::predict(Mat &input)
+int LandmarkPredict::predict(Mat input)
 {
 	vector<Point> face_landmark_fixed;
-	if (getLandmark(input,face_landmark_fixed)==-1)
+	vector<Point> face_landmark;
+	if (getLandmark(input,face_landmark,face_landmark_fixed)==-1)
 	{
 		return -1;
 	}
@@ -88,7 +89,7 @@ void LandmarkPredict::landMarkInfo(vector<Point>& input)
 
 }
 
-int LandmarkPredict::getLandmark(Mat frame,vector<Point> &vec_landmark)
+int LandmarkPredict::getLandmark(Mat frame,vector<Point> &vec_landmark,vector<Point> &vec_landmark_fixed)
 {
 	int max_point_x,min_point_x,max_point_y,min_point_y;
 	double box[4];
@@ -127,7 +128,9 @@ int LandmarkPredict::getLandmark(Mat frame,vector<Point> &vec_landmark)
 				max_point_y=parts[j].y;
 			if (min_point_y>parts[j].y)
 				min_point_y=parts[j].y;
-			//Point center( parts[j].x, parts[j].y ); 
+			
+			Point center( parts[j].x, parts[j].y ); 
+			vec_landmark.push_back(center);
 			//ellipse( frame, center, Size( 1, 1), 0, 0, 0, Scalar( 255, 0, 255 ), 4, 8, 0); 
 			/*
 			char c[3];
@@ -191,7 +194,7 @@ int LandmarkPredict::getLandmark(Mat frame,vector<Point> &vec_landmark)
 			center.x = nx+gx;
 			center.y = ny+gy;
 
-			vec_landmark.push_back(center);
+			vec_landmark_fixed.push_back(center);
 			/*
 			ellipse( landMark_face_fixed, center, Size( 1, 1), 0, 0, 0, Scalar( 255, 255, 255 ), 4, 8, 0 ); 
 			char c[3];

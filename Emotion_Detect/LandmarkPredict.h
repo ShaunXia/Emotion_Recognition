@@ -12,9 +12,9 @@ public:
 	LBF_model model;
 	string face_cascade_name;
 	int doPredict(vector<Point>&,CvSVM &SVM,PCA &pca,LDA &lda);
-	int getLandmark(Mat ,vector<Point> &);
+	int getLandmark(Mat ,vector<Point> &,vector<Point> &);
 	string doPredictFACS(vector<Point>&);
-	int predict(Mat&);
+	int predict(Mat);
 	void landMarkInfo(vector<Point>&);
 	void loadModel();
 	Mat loadMat(string mat_name);

@@ -20,17 +20,19 @@ using namespace cv;
 #define OPEN_TEMPLATE_FILE_FAIL 0
 #define DATA_NUM 622
 
-#define POINT_WIDTH 480
+#define POINT_WIDTH 650
 #define POINT_HEIGHT 640
 
 #define WITHOUT_PCA 0
 #define WITH_PCA 1
 #define WITH_PCA_LDA 2
 
-#define DR_TYPE 0
+#define DR_TYPE 1
+
 
 LBF_model model;
 string face_cascade_name = "haarcascade_frontalface_alt.xml"; 
+ofstream predict_log;
 void findPointsBorder(vector<Point> &points,Point &ul,Point &dr)
 {
 	double max_point_x,min_point_x,max_point_y,min_point_y;
@@ -172,6 +174,7 @@ int getLandmark(Mat &frame,vector<Point> &vec_landmark)
 	}
 	return 1;
 }
+
 int getFeature(Mat &frame,vector<double> &vec_feature)
 {
 	vector<Point> fixed_point;
@@ -193,7 +196,7 @@ int getFeature(Mat &frame,vector<double> &vec_feature)
 	face_cascade.detectMultiScale( frame, faces, 1.15, 5, 0);
 	if (faces.size()!=1)
 	{
-		return -1;
+		return 0;
 	}
 	for( int i = 0; i < faces.size(); i++ ){
 
@@ -208,7 +211,7 @@ int getFeature(Mat &frame,vector<double> &vec_feature)
 		max_point_y=parts[0].y;
 		min_point_y=parts[0].y;
 
-		for (int j = 0; j < parts.size(); ++j)
+		for (int j = 0; j < parts.size(); ++j)  //face 
 		{
 			if (max_point_x<parts[j].x)
 				max_point_x=parts[j].x;
@@ -226,11 +229,11 @@ int getFeature(Mat &frame,vector<double> &vec_feature)
 			string words= c;  
 			putText( frame, words, center,CV_FONT_HERSHEY_COMPLEX, 0.3, Scalar(255, 0, 0)); 
 			*/
-		}
+		} // get 
 
 		int l_width=max_point_x-min_point_x;
 		int l_height = max_point_y-min_point_y;
-		double point_scale=(POINT_WIDTH*1.0/l_width)>(POINT_HEIGHT*1.0/l_height)?(POINT_WIDTH*1.0/l_width):(POINT_HEIGHT*1.0/l_height);
+		double point_scale=POINT_WIDTH*1.0/l_width;
 
 		Mat landMark_face(POINT_HEIGHT,POINT_WIDTH+300,CV_8UC3,Scalar(0,0,0));
 		Mat landMark_face_fixed(POINT_HEIGHT,POINT_WIDTH+300,CV_8UC3,Scalar(0,0,0));
@@ -290,10 +293,12 @@ int getFeature(Mat &frame,vector<double> &vec_feature)
 			string words= c;  
 			putText( landMark_face_fixed, words, center, CV_FONT_HERSHEY_SIMPLEX, 0.5, Scalar(255, 0, 0));
 
-			//imshow("landMark_face_fixed", landMark_face_fixed);
-
+			
+			
 		}
 
+		//imshow("landMark_face_fixed", landMark_face_fixed);
+		//waitKey(0);
 
 		point_eyebrow.clear();
 		point_leye.clear();
@@ -306,7 +311,6 @@ int getFeature(Mat &frame,vector<double> &vec_feature)
 		for (int j = 17; j < 27; j++)
 		{
 			point_eyebrow.push_back(fixed_point[j]);
-
 		}
 
 		//Left eye
@@ -399,6 +403,15 @@ int getFeature(Mat &frame,vector<double> &vec_feature)
 
 		// all vec
 		vector<double> vec_all;
+
+		//double dis_36_39=sqrt((fixed_point[36].x - fixed_point[39].x)*(fixed_point[36].x - fixed_point[39].x)+(fixed_point[36].y - fixed_point[39].y)*(fixed_point[36].y - fixed_point[39].y));
+		double ES0 = fixed_point[44].x-fixed_point[38].x;
+		double IRISD0=fixed_point[46].y-fixed_point[44].y;
+		double ENS0 = fixed_point[33].y-fixed_point[27].y;
+		double MNS0 = fixed_point[51].y-fixed_point[33].y;
+		double MW0 = fixed_point[54].x - fixed_point[48].x;
+
+
 		for (int j = 17; j < fixed_point.size()-1; j++)
 		{
 			for (int l = j+1; l < fixed_point.size(); l++)
@@ -407,14 +420,23 @@ int getFeature(Mat &frame,vector<double> &vec_feature)
 				distance_x=fixed_point[j].x - fixed_point[l].x;
 				distance_y=fixed_point[j].y - fixed_point[l].y;
 				distance_h=sqrt(distance_x*distance_x+distance_y*distance_y);
-				vec_feature.push_back(distance_x);
-				vec_feature.push_back(distance_y);
+				vec_feature.push_back(distance_h*1.0/ES0);
+			//	vec_feature.push_back(distance_y*1.0/ES0);
+			//	vec_feature.push_back(distance_h*1.0/IRISD0);
+			//	vec_feature.push_back(distance_h*1.0/ENS0);
+			//	vec_feature.push_back(distance_h*1.0/MNS0);
+			//	vec_feature.push_back(distance_h*1.0/MW0);
 			}
 		}
 
 	}
 	return 1;
 
+}
+
+double getPointDistance(Point p1,Point p2)
+{
+	return sqrt((p1.x - p2.x)*(p1.x - p2.x)+(p1.y - p2.y)*(p1.y - p2.y));
 }
 
 int doTrain(vector<vector<double>> &vec_traindata,vector<int> &vec_trainlabel,vector<string> img_list)
@@ -525,8 +547,7 @@ int doPredict(vector<string> &img_list,CvSVM &SVM,map<string,int> &emotion_2_num
 		predict_result_correct_num[i]=0;
 		predict_result_all_num[i]=0;
 	}
-	ofstream out("predict_log.txt");
-
+	
 	map <string, int>::iterator m1_Iter;
 	int current_emotion_code;
 	int max_point_x,min_point_x,max_point_y,min_point_y;
@@ -535,7 +556,8 @@ int doPredict(vector<string> &img_list,CvSVM &SVM,map<string,int> &emotion_2_num
 	for (int k = 0; k < img_list.size(); k++)
 	{
 		cout<<k+1<<" / " <<img_list.size()<<"  --->  ";
-		out<<k+1<<" / " <<img_list.size()<<"  --->  ";
+		predict_log<<k+1<<" / " <<img_list.size()<<"  --->  ";
+		predict_log<<img_list[k]<<" ";
 		int loc=img_list[k].find("#");
 		int rloc = img_list[k].rfind("\\");
 		string ntp;
@@ -552,7 +574,7 @@ int doPredict(vector<string> &img_list,CvSVM &SVM,map<string,int> &emotion_2_num
 		int totalDimension=vec_all.size();
 		int currentDim=0;
 
-		if (detected)
+		if (detected==1)
 		{
 			find_feature_sample_num++;
 			Mat current_test_mat(1,totalDimension,CV_32FC1);
@@ -590,40 +612,39 @@ int doPredict(vector<string> &img_list,CvSVM &SVM,map<string,int> &emotion_2_num
 			int svm_result = SVM.predict(final_test);
 
 			cout<<" Label : "<<current_emotion_code<<"  Predict "<<svm_result;
-			out<<" Label : "<<current_emotion_code<<"  Predict "<<svm_result;
+			predict_log<<" Label : "<<current_emotion_code<<"  Predict "<<svm_result;
 			if (current_emotion_code==svm_result)
 			{
 				correct_num++;
 				predict_result_correct_num[current_emotion_code]++;
 				predict_result_all_num[current_emotion_code]++;
 				cout<<" -- Correct!"<<endl;
-				out<<" -- Correct!"<<endl;
+				predict_log<<" -- Correct!"<<endl;
 			}
 			else
 			{
 				predict_result_all_num[current_emotion_code]++;
 				cout<<" -- Incorrect!"<<endl;
-				out<<" -- Incorrect!"<<endl;
+				predict_log<<" -- Incorrect!"<<endl;
 			}
 		}
 		else
 		{
 			cout<<"  ## Detect None "<<endl;
-			out<<"  ## Detect None "<<endl;
+			predict_log<<"  ## Detect None "<<endl;
 		}
 	}
 
-	out<<"Correct / All :"<< correct_num<<" / "<<find_feature_sample_num<<" | "<< correct_num*1.0/find_feature_sample_num<<endl;
+	predict_log<<"Correct / All :"<< correct_num<<" / "<<find_feature_sample_num<<" | "<< correct_num*1.0/find_feature_sample_num<<endl;
 	cout<<"Correct / All :"<< correct_num<<" / "<<find_feature_sample_num<<" | "<< correct_num*1.0/find_feature_sample_num<<endl;
 
 	for (int i = 0; i < emotion_2_number.size(); i++)
 	{
 		cout<<"Code "<<i<<" :"<<predict_result_correct_num[i]<<" / "<<predict_result_all_num[i]<<endl;
-		out<<"Code "<<i<<" :"<<predict_result_correct_num[i]<<" / "<<predict_result_all_num[i]<<endl;
+		predict_log<<"Code "<<i<<" :"<<predict_result_correct_num[i]<<" / "<<predict_result_all_num[i]<<endl;
 	}
 
-	out<<"C :"<<SVM.get_params().C<<endl;
-	out.close();
+	predict_log<<"C :"<<SVM.get_params().C<<endl;
 	return 1;
 }
 
@@ -697,8 +718,8 @@ int main( int argc, char** argv ){
 
 	int train_type=0;
 
-	string train_path = "vltest";
-	string test_path = "vltest";
+	string train_path = "another";
+	string test_path = "new_test";
 
 	//cout<<"Input train path: ";
 	//cin>>train_path;
@@ -718,6 +739,9 @@ int main( int argc, char** argv ){
 
 	printf("Loading Model!\nWait......\n");
 	string file_name = "shape_1.dat";
+	predict_log.open("predict_log.txt");
+
+	predict_log<<"DR_TYPE "<<DR_TYPE<<endl;
 
 	if (!LBF_Model_Load(file_name, model))
 	{
@@ -739,7 +763,8 @@ int main( int argc, char** argv ){
 	string lda_name="with_lda";
 	string pca_name="pca_lda";
 	string svm_name="svm_model_with_all";
-
+	//Mat showCom(600,600,CV_32FC1);
+	ofstream out_pri_2("out_prin.txt");
 	if (!use_model_file)
 	{
 		doTrain(vec_traindata,vec_trainlabel,trainlist);
@@ -815,7 +840,15 @@ int main( int argc, char** argv ){
 			final_train=training_mat;
 		}
 
-		/*
+		for (int i = 0; i < vec_trainlabel.size(); i++)
+		{
+
+			out_pri_2<<vec_trainlabel[i]<<","<<final_train.at<float>(i,0)<<","<<final_train.at<float>(i,1)<<";";
+
+		}
+		out_pri_2.close();
+		
+		
 		cout<<"Auto Train"<<endl;
 		CvSVM atSVM;
 		CvParamGrid CvParamGrid_C(pow(2.0,-5), pow(2.0,15), pow(2.0,2));
@@ -826,8 +859,8 @@ int main( int argc, char** argv ){
 		paramz.kernel_type = CvSVM::LINEAR;
 		paramz.svm_type = CvSVM::C_SVC;
 		paramz.term_crit = cvTermCriteria(CV_TERMCRIT_ITER,100,0.000001);
-		atSVM.train_auto(final_train, train_label, Mat(), Mat(), paramz,10, CvParamGrid_C, CvParamGrid_gamma, CvSVM::get_default_grid(CvSVM::P), CvSVM::get_default_grid(CvSVM::NU), CvSVM::get_default_grid(CvSVM::COEF), CvSVM::get_default_grid(CvSVM::DEGREE), true);
-
+		atSVM.train_auto(final_train, train_label, Mat(), Mat(), paramz,10, CvParamGrid_C, CvParamGrid_gamma, CvSVM::get_default_grid(CvSVM::P), CvSVM::get_default_grid(CvSVM::NU), CvSVM::get_default_grid(CvSVM::COEF), CvSVM::get_default_grid(CvSVM::DEGREE), false);
+		
 		//Parms: C = 0.031250, P = 0.000000,gamma = 1.000000
 
 		CvSVMParams params_re = atSVM.get_params();
@@ -840,9 +873,9 @@ int main( int argc, char** argv ){
 		printf("\nParms: C = %f, P = %f,gamma = %f \n",C,P,gamma);
 		cout<<"~~~~~~~~~~~~Auto Train~~~~~~~~~~~~~~"<<endl;
 
-		params.C=C;
-		params.gamma=gamma;
-		*/
+		//params.C=C;
+		//params.gamma=gamma;
+		
 		SVM.train(final_train,train_label,Mat(),Mat(),params);
 		SVM.save(svm_name.c_str());
 		cout<<"\n---------Training Finished & File Saved -----------"<<endl;
