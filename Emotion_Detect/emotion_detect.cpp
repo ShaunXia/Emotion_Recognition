@@ -117,7 +117,7 @@ void Emotion_Detect::itemclick (QListWidgetItem *item)
 				Point center( current_landMark[i].x, current_landMark[i].y ); 
 				ellipse( frame_with_landMark, center, Size( 1, 1), 0, 0, 0, Scalar( 255, 0, 255 ), 4, 8, 0); 
 				
-				line(frame_with_landMark, current_landMark[27], current_landMark[i], Scalar( 255, 255, 255 ), 1, CV_AA, 0);
+				//line(frame_with_landMark, current_landMark[27], current_landMark[i], Scalar( 255, 255, 255 ), 1, CV_AA, 0);
 
 				//Show Fixed Point 
 				Point center1( current_landMark_fixed[i].x, current_landMark_fixed[i].y ); 

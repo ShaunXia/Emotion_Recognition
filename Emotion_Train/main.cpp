@@ -27,12 +27,13 @@ using namespace cv;
 #define WITH_PCA 1
 #define WITH_PCA_LDA 2
 
-#define DR_TYPE 1
+#define DR_TYPE 2
 
 
 LBF_model model;
 string face_cascade_name = "haarcascade_frontalface_alt.xml"; 
 ofstream predict_log;
+ofstream out_fixed_point("train_fixed_point.txt");
 void findPointsBorder(vector<Point> &points,Point &ul,Point &dr)
 {
 	double max_point_x,min_point_x,max_point_y,min_point_y;
@@ -287,14 +288,15 @@ int getFeature(Mat &frame,vector<double> &vec_feature)
 			center.y = ny+gy;
 
 			fixed_point.push_back(center);
+			out_fixed_point<<center.x<<" "<<center.y<<" ";
 			ellipse( landMark_face_fixed, center, Size( 1, 1), 0, 0, 0, Scalar( 255, 255, 255 ), 4, 8, 0 ); 
 			char c[3];
 			sprintf(c, "%d", j);
 			string words= c;  
 			putText( landMark_face_fixed, words, center, CV_FONT_HERSHEY_SIMPLEX, 0.5, Scalar(255, 0, 0));
 
-			
-			
+
+
 		}
 
 		//imshow("landMark_face_fixed", landMark_face_fixed);
@@ -402,7 +404,7 @@ int getFeature(Mat &frame,vector<double> &vec_feature)
 
 
 		// all vec
-		vector<double> vec_all;
+		vector<double> FAPU;
 
 		//double dis_36_39=sqrt((fixed_point[36].x - fixed_point[39].x)*(fixed_point[36].x - fixed_point[39].x)+(fixed_point[36].y - fixed_point[39].y)*(fixed_point[36].y - fixed_point[39].y));
 		double ES0 = fixed_point[44].x-fixed_point[38].x;
@@ -411,7 +413,54 @@ int getFeature(Mat &frame,vector<double> &vec_feature)
 		double MNS0 = fixed_point[51].y-fixed_point[33].y;
 		double MW0 = fixed_point[54].x - fixed_point[48].x;
 
+		FAPU.push_back(ES0);
+		FAPU.push_back(IRISD0);
+		FAPU.push_back(ENS0);
+		FAPU.push_back(MNS0);
+		FAPU.push_back(MW0);
 
+
+		vector<double> usr_set_distance;
+		double da,db,dc,dd,de,df,dg,dh,di,dj,dk,dl,dm,dn;
+		da=fixed_point[17].y-fixed_point[21].y;
+		db=fixed_point[21].x-fixed_point[17].x;
+		dc=fixed_point[22].x-fixed_point[21].x;
+		dd=fixed_point[46].y-fixed_point[44].y;
+		de=fixed_point[45].x-fixed_point[42].x;
+		df=fixed_point[42].x-fixed_point[39].x;
+		dg=fixed_point[30].y-fixed_point[27].y;
+		dh=fixed_point[39].y-fixed_point[36].y;
+		di=fixed_point[35].x-fixed_point[31].x;
+		dj=fixed_point[57].y-fixed_point[33].y;
+		dk=fixed_point[54].x-fixed_point[38].x;
+		dl=fixed_point[51].y-fixed_point[33].y;
+		dm=fixed_point[27].y-(fixed_point[22].y+fixed_point[21].y)/2;
+		dn=fixed_point[33].y-fixed_point[30].y;
+		usr_set_distance.push_back(da);
+		usr_set_distance.push_back(db);
+		usr_set_distance.push_back(dc);
+		usr_set_distance.push_back(dd);
+		usr_set_distance.push_back(de);
+		usr_set_distance.push_back(df);
+		usr_set_distance.push_back(dg);
+		usr_set_distance.push_back(dh);
+		usr_set_distance.push_back(di);
+		usr_set_distance.push_back(dj);
+		usr_set_distance.push_back(dk);
+		usr_set_distance.push_back(dl);
+		usr_set_distance.push_back(dm);
+		usr_set_distance.push_back(dn);
+
+		for (int j = 0; j  < FAPU.size(); j ++)
+		{
+			for (int l = 0; l < usr_set_distance.size(); l++)
+			{
+				//vec_feature.push_back(usr_set_distance[l]*1.0/FAPU[i]*1.0);
+			}
+		}
+
+
+		// Vector Distance
 		for (int j = 17; j < fixed_point.size()-1; j++)
 		{
 			for (int l = j+1; l < fixed_point.size(); l++)
@@ -420,14 +469,16 @@ int getFeature(Mat &frame,vector<double> &vec_feature)
 				distance_x=fixed_point[j].x - fixed_point[l].x;
 				distance_y=fixed_point[j].y - fixed_point[l].y;
 				distance_h=sqrt(distance_x*distance_x+distance_y*distance_y);
-				vec_feature.push_back(distance_h*1.0/ES0);
-			//	vec_feature.push_back(distance_y*1.0/ES0);
-			//	vec_feature.push_back(distance_h*1.0/IRISD0);
-			//	vec_feature.push_back(distance_h*1.0/ENS0);
-			//	vec_feature.push_back(distance_h*1.0/MNS0);
-			//	vec_feature.push_back(distance_h*1.0/MW0);
+				//	vec_feature.push_back(distance_h*1.0/ES0);
+				vec_feature.push_back(distance_x*1.0/ES0);
+				vec_feature.push_back(distance_y*1.0/ES0);
+				//	vec_feature.push_back(distance_h*1.0/IRISD0);
+				//	vec_feature.push_back(distance_h*1.0/ENS0);
+				//	vec_feature.push_back(distance_h*1.0/MNS0);
+				//	vec_feature.push_back(distance_h*1.0/MW0);
 			}
 		}
+
 
 	}
 	return 1;
@@ -452,6 +503,7 @@ int doTrain(vector<vector<double>> &vec_traindata,vector<int> &vec_trainlabel,ve
 
 	map <string, int>::iterator m1_Iter;
 	ofstream out("train_log.txt");
+
 	vector<string> notdetect_file;
 	map<string,int> emotion_2_number;
 
@@ -512,6 +564,7 @@ int doTrain(vector<vector<double>> &vec_traindata,vector<int> &vec_trainlabel,ve
 				ntp=img_list[k].substr(rloc+1,loc-rloc-1);
 				emIt = emotion_2_number.find(ntp);
 			}
+			out_fixed_point<<emIt->second<<endl;
 			vec_trainlabel.push_back(emIt->second);
 			cout<<" -- Fine"<<endl;
 		}
@@ -520,11 +573,13 @@ int doTrain(vector<vector<double>> &vec_traindata,vector<int> &vec_trainlabel,ve
 			notdetect_file.push_back(img_list[k]);
 			cout<<" ## Detect None "<<endl;
 		}
+
 		cout<<"\nFind: "<<find_feature_sample_num<<endl;
 		cout<<"Label size: "<<vec_trainlabel.size()<<endl;
 
 
 	}
+	out_fixed_point.close();
 	out<<find_feature_sample_num<<"/"<<img_list.size()<<endl;
 	out<<"No Face Img:"<<endl;
 	for (int i = 0; i < notdetect_file.size(); i++)
@@ -533,6 +588,108 @@ int doTrain(vector<vector<double>> &vec_traindata,vector<int> &vec_trainlabel,ve
 	}
 	out.close();
 
+}
+int doTrain(vector<vector<double>> &vec_traindata,vector<int> &vec_trainlabel,string features)
+{
+	vector<double> vec_feature;
+	ifstream input_fix("train_fixed_point_save.txt");
+	vector<Point> fixed_point;
+	int count=0;
+	while(input_fix)
+	{
+		Point input_p;
+		int label;
+		input_fix>>input_p.x>>input_p.y;
+		fixed_point.push_back(input_p);
+		++count;
+		if (count==68)
+		{
+			vec_feature.clear();
+			input_fix>>label;
+			vec_trainlabel.push_back(label);
+
+			// all vec
+			vector<double> FAPU;
+
+			//double dis_36_39=sqrt((fixed_point[36].x - fixed_point[39].x)*(fixed_point[36].x - fixed_point[39].x)+(fixed_point[36].y - fixed_point[39].y)*(fixed_point[36].y - fixed_point[39].y));
+			double ES0 = fixed_point[44].x-fixed_point[38].x;
+			double IRISD0=fixed_point[46].y-fixed_point[44].y;
+			double ENS0 = fixed_point[33].y-fixed_point[27].y;
+			double MNS0 = fixed_point[51].y-fixed_point[33].y;
+			double MW0 = fixed_point[54].x - fixed_point[48].x;
+
+			FAPU.push_back(ES0);
+			FAPU.push_back(IRISD0);
+			FAPU.push_back(ENS0);
+			FAPU.push_back(MNS0);
+			FAPU.push_back(MW0);
+
+
+			vector<double> usr_set_distance;
+			double da,db,dc,dd,de,df,dg,dh,di,dj,dk,dl,dm,dn;
+			da=fixed_point[17].y-fixed_point[21].y;
+			db=fixed_point[21].x-fixed_point[17].x;
+			dc=fixed_point[22].x-fixed_point[21].x;
+			dd=fixed_point[46].y-fixed_point[44].y;
+			de=fixed_point[45].x-fixed_point[42].x;
+			df=fixed_point[42].x-fixed_point[39].x;
+			dg=fixed_point[30].y-fixed_point[27].y;
+			dh=fixed_point[39].y-fixed_point[36].y;
+			di=fixed_point[35].x-fixed_point[31].x;
+			dj=fixed_point[57].y-fixed_point[33].y;
+			dk=fixed_point[54].x-fixed_point[38].x;
+			dl=fixed_point[51].y-fixed_point[33].y;
+			dm=fixed_point[27].y-(fixed_point[22].y+fixed_point[21].y)/2;
+			dn=fixed_point[33].y-fixed_point[30].y;
+			usr_set_distance.push_back(da);
+			usr_set_distance.push_back(db);
+			usr_set_distance.push_back(dc);
+			usr_set_distance.push_back(dd);
+			usr_set_distance.push_back(de);
+			usr_set_distance.push_back(df);
+			usr_set_distance.push_back(dg);
+			usr_set_distance.push_back(dh);
+			usr_set_distance.push_back(di);
+			usr_set_distance.push_back(dj);
+			usr_set_distance.push_back(dk);
+			usr_set_distance.push_back(dl);
+			usr_set_distance.push_back(dm);
+			usr_set_distance.push_back(dn);
+
+			for (int j = 0; j  < FAPU.size(); j ++)
+			{
+				for (int l = 0; l < usr_set_distance.size(); l++)
+				{
+					//vec_feature.push_back(usr_set_distance[l]*1.0/FAPU[i]*1.0);
+				}
+			}
+
+
+			// Vector Distance
+			for (int j = 17; j < fixed_point.size()-1; j++)
+			{
+				for (int l = j+1; l < fixed_point.size(); l++)
+				{
+					double distance_x,distance_y,distance_h;
+					distance_x=fixed_point[j].x - fixed_point[l].x;
+					distance_y=fixed_point[j].y - fixed_point[l].y;
+					distance_h=sqrt(distance_x*distance_x+distance_y*distance_y);
+					//	vec_feature.push_back(distance_h*1.0/ES0);
+					vec_feature.push_back(distance_x*1.0/ES0);
+					vec_feature.push_back(distance_y*1.0/ES0);
+					//	vec_feature.push_back(distance_h*1.0/IRISD0);
+					//	vec_feature.push_back(distance_h*1.0/ENS0);
+					//	vec_feature.push_back(distance_h*1.0/MNS0);
+					//	vec_feature.push_back(distance_h*1.0/MW0);
+				}
+			}
+			vec_traindata.push_back(vec_feature);
+			fixed_point.clear();
+			count=0;
+		}
+	}
+
+	return 1;
 }
 
 int doPredict(vector<string> &img_list,CvSVM &SVM,map<string,int> &emotion_2_number,PCA &pca,LDA &lda)
@@ -547,12 +704,12 @@ int doPredict(vector<string> &img_list,CvSVM &SVM,map<string,int> &emotion_2_num
 		predict_result_correct_num[i]=0;
 		predict_result_all_num[i]=0;
 	}
-	
+
 	map <string, int>::iterator m1_Iter;
 	int current_emotion_code;
 	int max_point_x,min_point_x,max_point_y,min_point_y;
-
-
+	int totalDimension=0;
+	vector<double> vec_all;
 	for (int k = 0; k < img_list.size(); k++)
 	{
 		cout<<k+1<<" / " <<img_list.size()<<"  --->  ";
@@ -569,16 +726,17 @@ int doPredict(vector<string> &img_list,CvSVM &SVM,map<string,int> &emotion_2_num
 		current_emotion_code=m1_Iter->second;
 
 		Mat frame=imread(img_list[k]);
-		vector<double> vec_all;
+
+		vec_all.clear();
+
 		int detected=getFeature(frame,vec_all);
-		int totalDimension=vec_all.size();
 		int currentDim=0;
 
 		if (detected==1)
 		{
 			find_feature_sample_num++;
-			Mat current_test_mat(1,totalDimension,CV_32FC1);
-			for (int j = 0; j < totalDimension; j++)
+			Mat current_test_mat(1,vec_all.size(),CV_32FC1);
+			for (int j = 0; j < vec_all.size(); j++)
 			{
 				current_test_mat.at<float>(0,currentDim)=vec_all[j];
 				currentDim++;
@@ -608,7 +766,7 @@ int doPredict(vector<string> &img_list,CvSVM &SVM,map<string,int> &emotion_2_num
 				final_test=current_test_mat;
 			}
 
-
+			totalDimension=final_test.cols;
 			int svm_result = SVM.predict(final_test);
 
 			cout<<" Label : "<<current_emotion_code<<"  Predict "<<svm_result;
@@ -644,7 +802,19 @@ int doPredict(vector<string> &img_list,CvSVM &SVM,map<string,int> &emotion_2_num
 		predict_log<<"Code "<<i<<" :"<<predict_result_correct_num[i]<<" / "<<predict_result_all_num[i]<<endl;
 	}
 
-	predict_log<<"C :"<<SVM.get_params().C<<endl;
+	predict_log<<"\nDR_TYPE "<<DR_TYPE<<endl;
+	predict_log<<"Data Dimension: "<<totalDimension<<endl<<endl;
+
+
+	predict_log<<"SVM PARAMETER\nC: "<<SVM.get_params().C<<endl;
+	predict_log<<"kernel_type: "<<SVM.get_params().kernel_type<<endl;
+	predict_log<<"svm_type: "<<SVM.get_params().svm_type<<endl<<endl;
+
+
+	predict_log<<"SVM type type\n"<<endl;
+	predict_log<<" C_SVC=100, NU_SVC=101, ONE_CLASS=102, EPS_SVR=103, NU_SVR=104 "<<endl<<endl;
+	predict_log<<"SVM kernel type\n"<<endl;
+	predict_log<<"LINEAR=0, POLY=1, RBF=2, SIGMOID=3"<<endl;
 	return 1;
 }
 
@@ -741,7 +911,7 @@ int main( int argc, char** argv ){
 	string file_name = "shape_1.dat";
 	predict_log.open("predict_log.txt");
 
-	predict_log<<"DR_TYPE "<<DR_TYPE<<endl;
+
 
 	if (!LBF_Model_Load(file_name, model))
 	{
@@ -767,7 +937,8 @@ int main( int argc, char** argv ){
 	ofstream out_pri_2("out_prin.txt");
 	if (!use_model_file)
 	{
-		doTrain(vec_traindata,vec_trainlabel,trainlist);
+		//doTrain(vec_traindata,vec_trainlabel,trainlist);
+		doTrain(vec_traindata,vec_trainlabel,"hello");
 		Mat training_mat(vec_trainlabel.size(),vec_traindata[0].size(),CV_32FC1);
 		Mat train_label(vec_trainlabel.size(),1,CV_32FC1);
 		cout<<"\n---------Img Feature Load Finished -----------"<<endl;
@@ -788,7 +959,7 @@ int main( int argc, char** argv ){
 		cout<<"\n==============Now SVM Training ============="<<endl;
 		CvSVMParams params;
 		params.svm_type = CvSVM::C_SVC;
-		params.kernel_type = CvSVM::LINEAR;
+		params.kernel_type = CvSVM::RBF;
 		params.term_crit = cvTermCriteria(CV_TERMCRIT_ITER,1000,5e-3);
 		//CvSVMParams(,)
 		params.C= 0.131250;
@@ -843,24 +1014,24 @@ int main( int argc, char** argv ){
 		for (int i = 0; i < vec_trainlabel.size(); i++)
 		{
 
-			out_pri_2<<vec_trainlabel[i]<<","<<final_train.at<float>(i,0)<<","<<final_train.at<float>(i,1)<<";";
+			out_pri_2<<vec_trainlabel[i]<<","<<final_train.at<float>(i,0)<<","<<final_train.at<float>(i,1)<<","<<final_train.at<float>(i,2)<<";";
 
 		}
 		out_pri_2.close();
-		
-		
+
+
 		cout<<"Auto Train"<<endl;
 		CvSVM atSVM;
 		CvParamGrid CvParamGrid_C(pow(2.0,-5), pow(2.0,15), pow(2.0,2));
 		CvParamGrid CvParamGrid_gamma(pow(2.0,-15), pow(2.0,3), pow(2.0,2));
 		if (!CvParamGrid_C.check() || !CvParamGrid_gamma.check())
-		cout<<"The grid is NOT VALID."<<endl;
+			cout<<"The grid is NOT VALID."<<endl;
 		CvSVMParams paramz;
-		paramz.kernel_type = CvSVM::LINEAR;
+		paramz.kernel_type = CvSVM::RBF;
 		paramz.svm_type = CvSVM::C_SVC;
 		paramz.term_crit = cvTermCriteria(CV_TERMCRIT_ITER,100,0.000001);
 		atSVM.train_auto(final_train, train_label, Mat(), Mat(), paramz,10, CvParamGrid_C, CvParamGrid_gamma, CvSVM::get_default_grid(CvSVM::P), CvSVM::get_default_grid(CvSVM::NU), CvSVM::get_default_grid(CvSVM::COEF), CvSVM::get_default_grid(CvSVM::DEGREE), false);
-		
+
 		//Parms: C = 0.031250, P = 0.000000,gamma = 1.000000
 
 		CvSVMParams params_re = atSVM.get_params();
@@ -869,13 +1040,13 @@ int main( int argc, char** argv ){
 		float P = params_re.p;
 		float gamma = params_re.gamma;
 
-		cout<<final_train<<endl;
+
 		printf("\nParms: C = %f, P = %f,gamma = %f \n",C,P,gamma);
 		cout<<"~~~~~~~~~~~~Auto Train~~~~~~~~~~~~~~"<<endl;
 
-		//params.C=C;
-		//params.gamma=gamma;
-		
+		params.C=C;
+		params.gamma=gamma;
+
 		SVM.train(final_train,train_label,Mat(),Mat(),params);
 		SVM.save(svm_name.c_str());
 		cout<<"\n---------Training Finished & File Saved -----------"<<endl;
