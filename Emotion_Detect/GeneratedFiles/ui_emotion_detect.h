@@ -24,7 +24,6 @@
 #include <QtWidgets/QScrollArea>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QSplitter>
-#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -35,50 +34,48 @@ public:
     QWidget *centralWidget;
     QWidget *gridLayoutWidget;
     QGridLayout *gridLayout;
-    QPushButton *choose_path;
-    QListWidget *fileList;
     QSlider *video_status;
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents_2;
     QHBoxLayout *horizontalLayout;
     QLabel *picshow;
+    QPushButton *choose_path;
+    QListWidget *fileList;
     QGroupBox *predict_control;
     QSplitter *splitter;
     QPushButton *but_loadlbf;
     QPushButton *but_start_detect;
     QPushButton *but_show_landmark;
-    QGroupBox *group_result;
-    QWidget *verticalLayoutWidget;
-    QVBoxLayout *result_layout;
-    QGroupBox *groupBox;
+    QGroupBox *groupBox_2;
     QPushButton *pushButton;
     QPushButton *but_capture;
+    QWidget *widget_res;
+    QWidget *gridWidget_2;
+    QGridLayout *gridLayout_2;
+    QLabel *label_res_1;
+    QLabel *label_res_3;
+    QLabel *label_res_2;
+    QLabel *label_res_4;
+    QLabel *label_res_5;
+    QLabel *label_res_0;
+    QLabel *label_res_6;
+    QLabel *label_res_7;
 
     void setupUi(QMainWindow *Emotion_DetectClass)
     {
         if (Emotion_DetectClass->objectName().isEmpty())
             Emotion_DetectClass->setObjectName(QStringLiteral("Emotion_DetectClass"));
-        Emotion_DetectClass->resize(555, 637);
+        Emotion_DetectClass->resize(770, 478);
         centralWidget = new QWidget(Emotion_DetectClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayoutWidget = new QWidget(centralWidget);
         gridLayoutWidget->setObjectName(QStringLiteral("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(10, 10, 531, 451));
+        gridLayoutWidget->setGeometry(QRect(10, 10, 531, 325));
         gridLayout = new QGridLayout(gridLayoutWidget);
         gridLayout->setSpacing(0);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
-        choose_path = new QPushButton(gridLayoutWidget);
-        choose_path->setObjectName(QStringLiteral("choose_path"));
-
-        gridLayout->addWidget(choose_path, 1, 1, 1, 1);
-
-        fileList = new QListWidget(gridLayoutWidget);
-        fileList->setObjectName(QStringLiteral("fileList"));
-
-        gridLayout->addWidget(fileList, 0, 1, 1, 1);
-
         video_status = new QSlider(gridLayoutWidget);
         video_status->setObjectName(QStringLiteral("video_status"));
         video_status->setOrientation(Qt::Horizontal);
@@ -92,14 +89,14 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(scrollArea->sizePolicy().hasHeightForWidth());
         scrollArea->setSizePolicy(sizePolicy);
-        scrollArea->setMinimumSize(QSize(400, 400));
+        scrollArea->setMinimumSize(QSize(400, 300));
         scrollArea->setAcceptDrops(false);
         scrollArea->setAutoFillBackground(false);
         scrollArea->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QStringLiteral("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 398, 424));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 398, 298));
         horizontalLayout = new QHBoxLayout(scrollAreaWidgetContents_2);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
@@ -107,6 +104,7 @@ public:
         picshow = new QLabel(scrollAreaWidgetContents_2);
         picshow->setObjectName(QStringLiteral("picshow"));
         picshow->setScaledContents(false);
+        picshow->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         picshow->setWordWrap(false);
 
         horizontalLayout->addWidget(picshow);
@@ -115,12 +113,20 @@ public:
 
         gridLayout->addWidget(scrollArea, 0, 0, 1, 1);
 
-        gridLayout->setColumnStretch(0, 3);
-        gridLayout->setColumnStretch(1, 1);
+        choose_path = new QPushButton(gridLayoutWidget);
+        choose_path->setObjectName(QStringLiteral("choose_path"));
+
+        gridLayout->addWidget(choose_path, 1, 1, 1, 1);
+
+        fileList = new QListWidget(gridLayoutWidget);
+        fileList->setObjectName(QStringLiteral("fileList"));
+
+        gridLayout->addWidget(fileList, 0, 1, 1, 1);
+
         predict_control = new QGroupBox(centralWidget);
         predict_control->setObjectName(QStringLiteral("predict_control"));
         predict_control->setEnabled(true);
-        predict_control->setGeometry(QRect(10, 470, 161, 161));
+        predict_control->setGeometry(QRect(560, 10, 161, 151));
         splitter = new QSplitter(predict_control);
         splitter->setObjectName(QStringLiteral("splitter"));
         splitter->setGeometry(QRect(30, 20, 101, 101));
@@ -134,28 +140,155 @@ public:
         but_show_landmark = new QPushButton(splitter);
         but_show_landmark->setObjectName(QStringLiteral("but_show_landmark"));
         splitter->addWidget(but_show_landmark);
-        group_result = new QGroupBox(centralWidget);
-        group_result->setObjectName(QStringLiteral("group_result"));
-        group_result->setGeometry(QRect(390, 470, 131, 161));
-        group_result->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
-        verticalLayoutWidget = new QWidget(group_result);
-        verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(10, 10, 111, 141));
-        result_layout = new QVBoxLayout(verticalLayoutWidget);
-        result_layout->setSpacing(3);
-        result_layout->setContentsMargins(11, 11, 11, 11);
-        result_layout->setObjectName(QStringLiteral("result_layout"));
-        result_layout->setContentsMargins(0, 0, 0, 0);
-        groupBox = new QGroupBox(centralWidget);
-        groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setGeometry(QRect(210, 480, 141, 151));
-        pushButton = new QPushButton(groupBox);
+        groupBox_2 = new QGroupBox(centralWidget);
+        groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
+        groupBox_2->setGeometry(QRect(550, 180, 161, 121));
+        pushButton = new QPushButton(groupBox_2);
         pushButton->setObjectName(QStringLiteral("pushButton"));
         pushButton->setGeometry(QRect(30, 70, 81, 31));
-        but_capture = new QPushButton(groupBox);
+        but_capture = new QPushButton(groupBox_2);
         but_capture->setObjectName(QStringLiteral("but_capture"));
         but_capture->setGeometry(QRect(30, 20, 81, 31));
+        widget_res = new QWidget(centralWidget);
+        widget_res->setObjectName(QStringLiteral("widget_res"));
+        widget_res->setGeometry(QRect(90, 330, 321, 131));
+        gridWidget_2 = new QWidget(widget_res);
+        gridWidget_2->setObjectName(QStringLiteral("gridWidget_2"));
+        gridWidget_2->setGeometry(QRect(0, 19, 301, 100));
+        gridWidget_2->setAutoFillBackground(false);
+        gridWidget_2->setStyleSheet(QStringLiteral("background-color: rgb(216, 216, 216);"));
+        gridLayout_2 = new QGridLayout(gridWidget_2);
+        gridLayout_2->setSpacing(0);
+        gridLayout_2->setContentsMargins(11, 11, 11, 11);
+        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
+        gridLayout_2->setContentsMargins(0, 0, 0, 0);
+        label_res_1 = new QLabel(gridWidget_2);
+        label_res_1->setObjectName(QStringLiteral("label_res_1"));
+        label_res_1->setAutoFillBackground(false);
+        label_res_1->setStyleSheet(QLatin1String("border-width: 1px;\n"
+"   border-style: solid;\n"
+"   border-color: rgb(85, 85, 85,0);\n"
+"border-right-color: rgb(85, 85, 85);\n"
+""));
+        label_res_1->setFrameShape(QFrame::Box);
+        label_res_1->setFrameShadow(QFrame::Plain);
+        label_res_1->setScaledContents(true);
+        label_res_1->setAlignment(Qt::AlignCenter);
+        label_res_1->setIndent(-1);
+
+        gridLayout_2->addWidget(label_res_1, 1, 1, 1, 1);
+
+        label_res_3 = new QLabel(gridWidget_2);
+        label_res_3->setObjectName(QStringLiteral("label_res_3"));
+        label_res_3->setStyleSheet(QLatin1String("border-width: 1px;\n"
+"   border-style: solid;\n"
+"   border-color: rgb(85, 85, 85,0);\n"
+"\n"
+""));
+        label_res_3->setFrameShape(QFrame::Box);
+        label_res_3->setAlignment(Qt::AlignCenter);
+
+        gridLayout_2->addWidget(label_res_3, 1, 3, 1, 1);
+
+        label_res_2 = new QLabel(gridWidget_2);
+        label_res_2->setObjectName(QStringLiteral("label_res_2"));
+        label_res_2->setStyleSheet(QLatin1String("border-width: 1px;\n"
+"   border-style: solid;\n"
+"   border-color: rgb(85, 85, 85,0);\n"
+"border-right-color: rgb(85, 85, 85);\n"
+""));
+        label_res_2->setFrameShape(QFrame::Box);
+        label_res_2->setAlignment(Qt::AlignCenter);
+
+        gridLayout_2->addWidget(label_res_2, 1, 2, 1, 1);
+
+        label_res_4 = new QLabel(gridWidget_2);
+        label_res_4->setObjectName(QStringLiteral("label_res_4"));
+        label_res_4->setStyleSheet(QString::fromUtf8("border-width: 1px;\n"
+"   border-style: solid;\n"
+"   border-color: rgb(85, 85, 85,0);\n"
+"border-right-color: rgb(85, 85, 85);\n"
+"border-bottom-color: rgb(85, 85, 85);\n"
+"font: 75 14pt \"\345\276\256\350\275\257\351\233\205\351\273\221\";"));
+        label_res_4->setFrameShape(QFrame::Box);
+        label_res_4->setPixmap(QPixmap(QString::fromUtf8("Resources/1_02.png")));
+        label_res_4->setAlignment(Qt::AlignCenter);
+
+        gridLayout_2->addWidget(label_res_4, 0, 0, 1, 1);
+
+        label_res_5 = new QLabel(gridWidget_2);
+        label_res_5->setObjectName(QStringLiteral("label_res_5"));
+        label_res_5->setAutoFillBackground(false);
+        label_res_5->setStyleSheet(QString::fromUtf8("border-width: 1px;\n"
+"   border-style: solid;\n"
+"   border-color: rgb(85, 85, 85,0);\n"
+"border-right-color: rgb(85, 85, 85);\n"
+"border-bottom-color: rgb(85, 85, 85);\n"
+"font: 75 14pt \"\345\276\256\350\275\257\351\233\205\351\273\221\";"));
+        label_res_5->setFrameShape(QFrame::Box);
+        label_res_5->setFrameShadow(QFrame::Plain);
+        label_res_5->setPixmap(QPixmap(QString::fromUtf8("Resources/1_01.png")));
+        label_res_5->setScaledContents(true);
+        label_res_5->setAlignment(Qt::AlignCenter);
+        label_res_5->setIndent(-1);
+
+        gridLayout_2->addWidget(label_res_5, 0, 1, 1, 1);
+
+        label_res_0 = new QLabel(gridWidget_2);
+        label_res_0->setObjectName(QStringLiteral("label_res_0"));
+        label_res_0->setStyleSheet(QLatin1String("border-width: 1px;\n"
+"   border-style: solid;\n"
+"   border-color: rgb(85, 85, 85,0);\n"
+"border-right-color: rgb(85, 85, 85);"));
+        label_res_0->setFrameShape(QFrame::Box);
+        label_res_0->setAlignment(Qt::AlignCenter);
+
+        gridLayout_2->addWidget(label_res_0, 1, 0, 1, 1);
+
+        label_res_6 = new QLabel(gridWidget_2);
+        label_res_6->setObjectName(QStringLiteral("label_res_6"));
+        label_res_6->setStyleSheet(QString::fromUtf8("border-width: 1px;\n"
+"   border-style: solid;\n"
+"   border-color: rgb(85, 85, 85,0);\n"
+"border-right-color: rgb(85, 85, 85);\n"
+"border-bottom-color: rgb(85, 85, 85);\n"
+"font: 75 14pt \"\345\276\256\350\275\257\351\233\205\351\273\221\";"));
+        label_res_6->setFrameShape(QFrame::Box);
+        label_res_6->setPixmap(QPixmap(QString::fromUtf8("Resources/1_03.png")));
+        label_res_6->setAlignment(Qt::AlignCenter);
+
+        gridLayout_2->addWidget(label_res_6, 0, 2, 1, 1);
+
+        label_res_7 = new QLabel(gridWidget_2);
+        label_res_7->setObjectName(QStringLiteral("label_res_7"));
+        label_res_7->setStyleSheet(QString::fromUtf8("border-width: 1px;\n"
+"   border-style: solid;\n"
+"   border-color: rgb(85, 85, 85,0);\n"
+"\n"
+"border-bottom-color: rgb(85, 85, 85);\n"
+"font: 75 14pt \"\345\276\256\350\275\257\351\233\205\351\273\221\";"));
+        label_res_7->setFrameShape(QFrame::Box);
+        label_res_7->setPixmap(QPixmap(QString::fromUtf8("Resources/1_04.png")));
+        label_res_7->setAlignment(Qt::AlignCenter);
+
+        gridLayout_2->addWidget(label_res_7, 0, 3, 1, 1);
+
+        gridLayout_2->setRowStretch(0, 4);
+        label_res_1->raise();
+        label_res_2->raise();
+        label_res_3->raise();
+        label_res_0->raise();
+        label_res_4->raise();
+        label_res_5->raise();
+        label_res_6->raise();
+        label_res_7->raise();
         Emotion_DetectClass->setCentralWidget(centralWidget);
+        gridLayoutWidget->raise();
+        predict_control->raise();
+        groupBox_2->raise();
+        widget_res->raise();
+        label_res_0->raise();
+        label_res_0->raise();
 
         retranslateUi(Emotion_DetectClass);
 
@@ -170,10 +303,17 @@ public:
         but_loadlbf->setText(QApplication::translate("Emotion_DetectClass", "Load Model", 0));
         but_start_detect->setText(QApplication::translate("Emotion_DetectClass", "Start Detect", 0));
         but_show_landmark->setText(QApplication::translate("Emotion_DetectClass", "Show LandMark", 0));
-        group_result->setTitle(QApplication::translate("Emotion_DetectClass", "Result", 0));
-        groupBox->setTitle(QApplication::translate("Emotion_DetectClass", "GroupBox", 0));
+        groupBox_2->setTitle(QApplication::translate("Emotion_DetectClass", "GroupBox", 0));
         pushButton->setText(QApplication::translate("Emotion_DetectClass", "PushButton", 0));
         but_capture->setText(QApplication::translate("Emotion_DetectClass", "Capture", 0));
+        label_res_1->setText(QString());
+        label_res_3->setText(QString());
+        label_res_2->setText(QString());
+        label_res_4->setText(QString());
+        label_res_5->setText(QString());
+        label_res_0->setText(QString());
+        label_res_6->setText(QString());
+        label_res_7->setText(QString());
     } // retranslateUi
 
 };

@@ -7,7 +7,7 @@
 #include <QDir>
 #include <qfiledialog.h>
 #include <qmessagebox.h>
-
+#include <qpropertyanimation.h>
 #include <string>
 #include <cmath>
 #include <ctime>
@@ -26,6 +26,7 @@ class Emotion_Detect : public QMainWindow
 public:
 	Emotion_Detect(QWidget *parent = 0);
 	~Emotion_Detect();
+	void but_tri(int res);
 
 	private slots: 
 	void getFileList();
@@ -37,7 +38,7 @@ public:
 	void but_loadmodel();
 	void but_start_detect();
 	void but_show_landmark();
-	void but_tri();
+	 
 
 private:
 	Ui::Emotion_DetectClass ui;

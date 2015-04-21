@@ -320,7 +320,7 @@ int LandmarkPredict::doPredict(vector<Point> &vec_landmark,CvSVM &SVM,PCA &pca,L
 		}
 	}
 
-
+	double ES0 = vec_landmark[44].x-vec_landmark[38].x;
 	// all vec
 	vector<double> vec_all;
 	for (int j = 17; j < vec_landmark.size()-1; j++)
@@ -331,8 +331,8 @@ int LandmarkPredict::doPredict(vector<Point> &vec_landmark,CvSVM &SVM,PCA &pca,L
 			distance_x=vec_landmark[j].x - vec_landmark[l].x;
 			distance_y=vec_landmark[j].y - vec_landmark[l].y;
 			distance_h=sqrt(distance_x*distance_x+distance_y*distance_y);
-			vec_all.push_back(distance_x);
-			vec_all.push_back(distance_y);
+			vec_all.push_back(distance_h/ES0);
+			//vec_all.push_back(distance_y);
 		}
 	}
 

@@ -24,13 +24,16 @@ Emotion_Detect::Emotion_Detect(QWidget *parent)
 		QString st = QString::fromStdString(estring);
 		st.append(" - ");
 		st.append(QString::number(ecode));
-		vec_qlabel.push_back(new QLabel(st));
-		vec_qlabel[tpcount]->setStyleSheet(QStringLiteral("font: 75 14pt 'Arial';color: black;"));
-		ui.result_layout->addWidget(vec_qlabel[tpcount++]);
+		
 
 	}
 	map_file.close();
-
+	ui.label_res_0->setText(QString::fromStdString(num2emo[0]));
+	ui.label_res_1->setText(QString::fromStdString(num2emo[1]));
+	ui.label_res_2->setText(QString::fromStdString(num2emo[2]));
+	ui.label_res_3->setText(QString::fromStdString(num2emo[3]));
+	cap.set(CV_CAP_PROP_FRAME_WIDTH,240);
+	cap.set(CV_CAP_PROP_FRAME_HEIGHT,160);
 
 	connect(timer,SIGNAL(timeout()),this,SLOT(startLoopSlot()));
 	connect(ui.choose_path, SIGNAL(clicked()), this, SLOT(getFileList()));
@@ -42,7 +45,8 @@ Emotion_Detect::Emotion_Detect(QWidget *parent)
 	connect(ui.but_start_detect,SIGNAL(clicked()),this,SLOT(but_start_detect()));
 	connect(ui.but_show_landmark,SIGNAL(clicked()),this,SLOT(but_show_landmark()));
 
-	connect(ui.pushButton,SIGNAL(clicked()),this,SLOT(but_tri()));
+	//connect(ui.pushButton,SIGNAL(clicked()),this,SLOT(but_tri()));
+
 
 
 }
@@ -58,6 +62,9 @@ void Emotion_Detect::getFileList()
 	ui.fileList->clear();
 	filePath = QFileDialog::getExistingDirectory(NULL, tr("Ñ¡ÔñÎÄ¼þ¼Ð"),"D:\\",QFileDialog::ShowDirsOnly);
 	QDir dir(filePath);
+	QStringList filters;
+	filters<<QString("*.jpg")<<QString("*.png")<<QString("*.bmp")<<QString("*.avi");
+	dir.setNameFilters(filters);
 	QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
 	for (int i = 0; i < list.size(); i++)
 	{
@@ -71,10 +78,6 @@ void Emotion_Detect::itemclick (QListWidgetItem *item)
 {
 	current_landMark.clear();
 	current_landMark_fixed.clear();
-	for (int i = 0; i < vec_qlabel.size(); i++)
-	{
-		vec_qlabel[i]->setStyleSheet(QStringLiteral("font: 75 14pt 'Arial';color: black;"));
-	}
 
 	QString tppath = filePath;
 	tppath.append("/").append(item->text());
@@ -91,7 +94,7 @@ void Emotion_Detect::itemclick (QListWidgetItem *item)
 
 		// image FEATURE
 		frame_ori=imread(tppath.toStdString());
-		double scale = 456*1.0/frame_ori.rows;
+		double scale = 240*1.0/frame_ori.rows;
 
 		cv::resize(frame_ori,frame_ori,Size(frame_ori.cols*scale,frame_ori.rows*scale),0,0,CV_INTER_LINEAR);
 		frame_with_landMark=frame_ori.clone();
@@ -102,33 +105,32 @@ void Emotion_Detect::itemclick (QListWidgetItem *item)
 		{
 
 			int res=LPredict.predict(frame_ori);
-			if (res!=-1)
+			but_tri(res);
+
+			LPredict.getLandmark(frame_ori,current_landMark,current_landMark_fixed);
+			if (is_show_landmark)
 			{
-				vec_qlabel[res]->setStyleSheet(QStringLiteral("font: 75 14pt 'Arial';color: rgb(255, 0, 0);"));
+				for (int i = 0; i < current_landMark.size(); i++)
+				{
+					//Show LANDMARK IN PIC
+					Point center( current_landMark[i].x, current_landMark[i].y ); 
+					ellipse( frame_with_landMark, center, Size( 1, 1), 0, 0, 0, Scalar( 255, 0, 255 ), 4, 8, 0); 
+
+					//line(frame_with_landMark, current_landMark[27], current_landMark[i], Scalar( 255, 255, 255 ), 1, CV_AA, 0);
+
+					//Show Fixed Point 
+					Point center1( current_landMark_fixed[i].x, current_landMark_fixed[i].y ); 
+					ellipse( show_fixed_point, center1, Size( 1, 1), 0, 0, 0, Scalar( 255, 0, 255 ), 4, 8, 0); 
+					char c[3];
+					sprintf(c, "%d", i);
+					string words= c;  
+					putText( show_fixed_point, words, center1,CV_FONT_HERSHEY_SIMPLEX, 0.6, Scalar(255, 0, 0)); 
+
+				}
+				frame_forQTshow=frame_with_landMark.clone();
 			}
-
-		}
-		LPredict.getLandmark(frame_ori,current_landMark,current_landMark_fixed);
-		if (is_show_landmark)
-		{
-			for (int i = 0; i < current_landMark.size(); i++)
-			{
-				//Show LANDMARK IN PIC
-				Point center( current_landMark[i].x, current_landMark[i].y ); 
-				ellipse( frame_with_landMark, center, Size( 1, 1), 0, 0, 0, Scalar( 255, 0, 255 ), 4, 8, 0); 
-				
-				//line(frame_with_landMark, current_landMark[27], current_landMark[i], Scalar( 255, 255, 255 ), 1, CV_AA, 0);
-
-				//Show Fixed Point 
-				Point center1( current_landMark_fixed[i].x, current_landMark_fixed[i].y ); 
-				ellipse( show_fixed_point, center1, Size( 1, 1), 0, 0, 0, Scalar( 255, 0, 255 ), 4, 8, 0); 
-				char c[3];
-				sprintf(c, "%d", i);
-				string words= c;  
-				putText( show_fixed_point, words, center1,CV_FONT_HERSHEY_SIMPLEX, 0.6, Scalar(255, 0, 0)); 
-
-			}
-			frame_forQTshow=frame_with_landMark.clone();
+			else
+				frame_forQTshow=frame_ori.clone();
 		}
 		else
 			frame_forQTshow=frame_ori.clone();
@@ -165,8 +167,7 @@ void Emotion_Detect::itemclick (QListWidgetItem *item)
 					return ;
 				timer->start();
 			}
-			cap.set(CV_CAP_PROP_FRAME_WIDTH,320);
-			cap.set(CV_CAP_PROP_FRAME_HEIGHT,160);
+
 		}
 
 		else // AVI file
@@ -201,10 +202,6 @@ void Emotion_Detect::startLoopSlot()
 {
 	current_landMark.clear();
 	current_landMark_fixed.clear();
-	for (int i = 0; i < vec_qlabel.size(); i++)
-	{
-		vec_qlabel[i]->setStyleSheet(QStringLiteral("font: 75 14pt 'Arial';color: black;"));
-	}
 	if (captype==1)
 	{
 		if (current_frame==ui.video_status->maximum())
@@ -216,26 +213,47 @@ void Emotion_Detect::startLoopSlot()
 	}
 
 	cap >> frame_ori; // get a new frame from camera
+	double scale = 240*1.0/frame_ori.rows;
+
+	cv::resize(frame_ori,frame_ori,Size(frame_ori.cols*scale,frame_ori.rows*scale),0,0,CV_INTER_LINEAR);
+	Mat show_fixed_point=Mat::zeros(640,780,CV_8UC3);
 	frame_with_landMark=frame_ori.clone();
+	int getit=0;
 	if (video_is_detect==1)
 	{
 		int res=LPredict.predict(frame_ori);
-		if (res!=-1)
+		but_tri(res);
+		getit=LPredict.getLandmark(frame_ori,current_landMark,current_landMark_fixed);
+		if (is_show_landmark&&getit!=-1)
 		{
-			vec_qlabel[res]->setStyleSheet(QStringLiteral("font: 75 14pt 'Arial';color: red;"));
-		}
+			Scalar active_facet_color(0, 0, 255), delaunay_color(255,255,255);
+			Rect rect(0, 0, 1000, 1000);
+			Subdiv2D subdiv(rect);
 
-	}
-	LPredict.getLandmark(frame_ori,current_landMark,current_landMark_fixed);
-	if (is_show_landmark)
-	{
-		for (int i = 0; i < current_landMark.size(); i++)
-		{
-			Point center( current_landMark[i].x, current_landMark[i].y ); 
-			ellipse( frame_with_landMark, center, Size( 1, 1), 0, 0, 0, Scalar( 255, 0, 255 ), 4, 8, 0); 
+
+			for (int i = 0; i < current_landMark.size(); i++)
+			{
+				Point center( current_landMark[i].x, current_landMark[i].y ); 
+				ellipse( frame_with_landMark, center, Size( 1, 1), 0, 0, 0, Scalar( 255, 0, 255 ), 4, 8, 0); 
+				Point center_fix(current_landMark_fixed[i].x, current_landMark_fixed[i].y);
+				ellipse( show_fixed_point, center_fix, Size( 1, 1), 0, 0, 0, Scalar( 255, 0, 255 ), 4, 8, 0); 
+				if (i%2==0)
+				{
+					subdiv.insert(current_landMark[i]);
+				}
+
+			}
+			draw_subdiv( frame_with_landMark, subdiv, delaunay_color );
+			frame_forQTshow=frame_with_landMark.clone();
+			imshow("x",show_fixed_point);
+
+			//imshow( win, img );
+			//waitKey(30);
+			waitKey(30);
 
 		}
-		frame_forQTshow=frame_with_landMark.clone();
+		else
+			frame_forQTshow=frame_ori.clone();
 	}
 	else
 		frame_forQTshow=frame_ori.clone();
@@ -254,8 +272,7 @@ void Emotion_Detect::startLoopSlot()
 			center=Point( current_landMark_fixed[i].x, current_landMark_fixed[i].y ); 
 		ellipse( new_face, center, Size( 1, 1), 0, 0, 0, Scalar( 255), 4, 8, 0); 
 	}
-	imshow("neutral",new_face);
-	waitKey(30);
+
 	cvtColor(frame_forQTshow, frame_forQTshow, CV_BGR2RGB); 
 	qCam = new QImage((unsigned char*)frame_forQTshow.data, // uchar* data  
 		frame_forQTshow.cols, frame_forQTshow.rows, // width height  
@@ -325,36 +342,38 @@ void Emotion_Detect::but_capture()
 
 void Emotion_Detect::draw_subdiv( Mat& img, Subdiv2D& subdiv, Scalar delaunay_color )
 {
-#if 1
+	bool draw;
 	vector<Vec6f> triangleList;
 	subdiv.getTriangleList(triangleList);
 	vector<Point> pt(3);
 
-	for( size_t i = 0; i < triangleList.size(); i++ )
+	for(size_t i = 0; i < triangleList.size(); ++i)
 	{
 		Vec6f t = triangleList[i];
+
 		pt[0] = Point(cvRound(t[0]), cvRound(t[1]));
 		pt[1] = Point(cvRound(t[2]), cvRound(t[3]));
 		pt[2] = Point(cvRound(t[4]), cvRound(t[5]));
-		line(img, pt[0], pt[1], delaunay_color, 1, CV_AA, 0);
-		line(img, pt[1], pt[2], delaunay_color, 1, CV_AA, 0);
-		line(img, pt[2], pt[0], delaunay_color, 1, CV_AA, 0);
+		// MY PIECE OF CODE
+		draw=true;
+
+		for(int i=0;i<3;i++){
+			if(pt[i].x>img.cols||pt[i].y>img.rows||pt[i].x<0||pt[i].y<0)
+				draw=false;
+		}
+		if (draw){
+			line(img, pt[0], pt[1], delaunay_color, 1);
+			line(img, pt[1], pt[2], delaunay_color, 1);
+			line(img, pt[2], pt[0], delaunay_color, 1);
+		}
+
+
 	}
-#else
-	vector<Vec4f> edgeList;
-	subdiv.getEdgeList(edgeList);
-	for( size_t i = 0; i < edgeList.size(); i++ )
-	{
-		Vec4f e = edgeList[i];
-		Point pt0 = Point(cvRound(e[0]), cvRound(e[1]));
-		Point pt1 = Point(cvRound(e[2]), cvRound(e[3]));
-		line(img, pt0, pt1, delaunay_color, 1, CV_AA, 0);
-	}
-#endif
 }
 
-void Emotion_Detect::but_tri()
+void Emotion_Detect::but_tri(int res)
 {
+	/*
 	Scalar active_facet_color(0, 0, 255), delaunay_color(255,255,255);
 	Rect rect(0, 0, 1000, 1000);
 	Subdiv2D subdiv(rect);
@@ -364,13 +383,44 @@ void Emotion_Detect::but_tri()
 	string win = "Delaunay Demo";
 	imshow(win, img);
 
-	for( int i = 0; i < neutral_landMark.size(); i++ )
+	for( int i = 0; i < current_landMark_fixed.size(); i++ )
 	{
-		subdiv.insert(neutral_landMark[i]);
-		img = Scalar::all(0);
+	subdiv.insert(current_landMark_fixed[i]);
+	img = Scalar::all(0);
 	}
 	draw_subdiv( img, subdiv, delaunay_color );
 	imshow( win, img );
-	waitKey(0);
+	waitKey(30);*/
+	ui.label_res_0->setStyleSheet(QLatin1String("background-color: rgb(255, 85, 0,0);"));
+	ui.label_res_1->setStyleSheet(QLatin1String("background-color: rgb(255, 85, 0,0);"));
+	ui.label_res_2->setStyleSheet(QLatin1String("background-color: rgb(255, 85, 0,0);"));
+	ui.label_res_3->setStyleSheet(QLatin1String("background-color: rgb(255, 85, 0,0);"));
+	ui.label_res_4->setStyleSheet(QLatin1String("background-color: rgb(255, 85, 0,0);"));
+	ui.label_res_5->setStyleSheet(QLatin1String("background-color: rgb(255, 85, 0,0);"));
+	ui.label_res_6->setStyleSheet(QLatin1String("background-color: rgb(255, 85, 0,0);"));
+	ui.label_res_7->setStyleSheet(QLatin1String("background-color: rgb(255, 85, 0,0);"));
+
+	if (res==0)
+	{
+		ui.label_res_0->setStyleSheet(QLatin1String("background-color: rgb(255, 85, 0);"));
+		ui.label_res_4->setStyleSheet(QLatin1String("background-color: rgb(255, 85, 0);"));
+	}
+	if (res==1)
+	{
+		ui.label_res_1->setStyleSheet(QLatin1String("background-color: rgb(255, 85, 0);"));
+		ui.label_res_5->setStyleSheet(QLatin1String("background-color: rgb(255, 85, 0);"));
+	}
+	if (res==2)
+	{
+		ui.label_res_2->setStyleSheet(QLatin1String("background-color: rgb(255, 85, 0);"));
+		ui.label_res_6->setStyleSheet(QLatin1String("background-color: rgb(255, 85, 0);"));
+	}
+	if (res==3)
+	{
+		ui.label_res_3->setStyleSheet(QLatin1String("background-color: rgb(255, 85, 0);"));
+		ui.label_res_7->setStyleSheet(QLatin1String("background-color: rgb(255, 85, 0);"));
+	}
+
+
 
 }

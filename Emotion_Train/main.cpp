@@ -27,7 +27,7 @@ using namespace cv;
 #define WITH_PCA 1
 #define WITH_PCA_LDA 2
 
-#define DR_TYPE 2
+#define DR_TYPE 1
 
 
 LBF_model model;
@@ -65,7 +65,7 @@ int getLandmark(Mat &frame,vector<Point> &vec_landmark)
 	vector<point<double>> parts;
 
 	if( !face_cascade.load( face_cascade_name ) ){  
-		printf("绾ц仈鍒嗙被鍣ㄩ敊璇紝鍙兘鏈壘鍒版枃浠讹紝鎷疯礉璇ユ枃浠跺埌宸ョ▼鐩綍涓嬶紒\n");
+		printf("级联分类器错误，可能未找到文件，拷贝该文件到工程目录下！\n");
 		return -1;
 	}
 	std::vector<Rect> faces;
@@ -190,7 +190,7 @@ int getFeature(Mat &frame,vector<double> &vec_feature)
 	vector<point<double>> parts;
 
 	if( !face_cascade.load( face_cascade_name ) ){  
-		printf("绾ц仈鍒嗙被鍣ㄩ敊璇紝鍙兘鏈壘鍒版枃浠讹紝鎷疯礉璇ユ枃浠跺埌宸ョ▼鐩綍涓嬶紒\n");
+		printf("级联分类器错误，可能未找到文件，拷贝该文件到工程目录下！\n");
 		return -1;
 	}
 	std::vector<Rect> faces;
@@ -455,11 +455,11 @@ int getFeature(Mat &frame,vector<double> &vec_feature)
 		{
 			for (int l = 0; l < usr_set_distance.size(); l++)
 			{
-				//vec_feature.push_back(usr_set_distance[l]*1.0/FAPU[i]*1.0);
+				//vec_feature.push_back(usr_set_distance[l]*1.0/FAPU[j]*1.0);
 			}
 		}
 
-
+		double st_dis = fixed_point[42].x-fixed_point[39].x;
 		// Vector Distance
 		for (int j = 17; j < fixed_point.size()-1; j++)
 		{
@@ -469,9 +469,9 @@ int getFeature(Mat &frame,vector<double> &vec_feature)
 				distance_x=fixed_point[j].x - fixed_point[l].x;
 				distance_y=fixed_point[j].y - fixed_point[l].y;
 				distance_h=sqrt(distance_x*distance_x+distance_y*distance_y);
-				//	vec_feature.push_back(distance_h*1.0/ES0);
-				vec_feature.push_back(distance_x*1.0/ES0);
-				vec_feature.push_back(distance_y*1.0/ES0);
+				vec_feature.push_back(distance_h*1.0/st_dis);
+				//vec_feature.push_back(distance_x*1.0/ES0);
+				//vec_feature.push_back(distance_y*1.0/ES0);
 				//	vec_feature.push_back(distance_h*1.0/IRISD0);
 				//	vec_feature.push_back(distance_h*1.0/ENS0);
 				//	vec_feature.push_back(distance_h*1.0/MNS0);
@@ -497,7 +497,7 @@ int doTrain(vector<vector<double>> &vec_traindata,vector<int> &vec_trainlabel,ve
 	int current_emotion_code=0;
 
 	if( !face_cascade.load( face_cascade_name ) ){  
-		printf("绾ц仈鍒嗙被鍣ㄩ敊璇紝鍙兘鏈壘鍒版枃浠讹紝鎷疯礉璇ユ枃浠跺埌宸ョ▼鐩綍涓嬶紒\n");
+		printf("级联分类器错误，可能未找到文件，拷贝该文件到工程目录下！\n");
 		return -1;
 	}
 
@@ -660,11 +660,12 @@ int doTrain(vector<vector<double>> &vec_traindata,vector<int> &vec_trainlabel,st
 			{
 				for (int l = 0; l < usr_set_distance.size(); l++)
 				{
-					//vec_feature.push_back(usr_set_distance[l]*1.0/FAPU[i]*1.0);
+					//vec_feature.push_back(usr_set_distance[l]*1.0/FAPU[j]*1.0);
 				}
 			}
 
 
+			double st_dis = fixed_point[42].x-fixed_point[39].x;
 			// Vector Distance
 			for (int j = 17; j < fixed_point.size()-1; j++)
 			{
@@ -674,9 +675,9 @@ int doTrain(vector<vector<double>> &vec_traindata,vector<int> &vec_trainlabel,st
 					distance_x=fixed_point[j].x - fixed_point[l].x;
 					distance_y=fixed_point[j].y - fixed_point[l].y;
 					distance_h=sqrt(distance_x*distance_x+distance_y*distance_y);
-					//	vec_feature.push_back(distance_h*1.0/ES0);
-					vec_feature.push_back(distance_x*1.0/ES0);
-					vec_feature.push_back(distance_y*1.0/ES0);
+					vec_feature.push_back(distance_h*1.0/st_dis);
+					//vec_feature.push_back(distance_x*1.0/ES0);
+					//vec_feature.push_back(distance_y*1.0/ES0);
 					//	vec_feature.push_back(distance_h*1.0/IRISD0);
 					//	vec_feature.push_back(distance_h*1.0/ENS0);
 					//	vec_feature.push_back(distance_h*1.0/MNS0);
@@ -692,7 +693,7 @@ int doTrain(vector<vector<double>> &vec_traindata,vector<int> &vec_trainlabel,st
 	return 1;
 }
 
-int doPredict(vector<string> &img_list,CvSVM &SVM,map<string,int> &emotion_2_number,PCA &pca,LDA &lda)
+int doPredict(vector<string> &img_list,CvSVM &SVM,map<string,int> &emotion_2_number,PCA &pca,LDA &lda,CvANN_MLP &ann)
 {
 
 	int find_feature_sample_num=0;
@@ -768,10 +769,21 @@ int doPredict(vector<string> &img_list,CvSVM &SVM,map<string,int> &emotion_2_num
 
 			totalDimension=final_test.cols;
 			int svm_result = SVM.predict(final_test);
-
-			cout<<" Label : "<<current_emotion_code<<"  Predict "<<svm_result;
-			predict_log<<" Label : "<<current_emotion_code<<"  Predict "<<svm_result;
-			if (current_emotion_code==svm_result)
+			Mat ann_res;
+			ann.predict(final_test,ann_res);
+			int max_loc=0;
+			double  max_val=-1.0;
+			for (int m = 0; m < ann_res.cols; m++)
+			{
+				if (max_val<ann_res.at<float>(0,m))
+				{
+					max_val=ann_res.at<float>(0,m);
+					max_loc=m;
+				}
+			}
+			cout<<" Label : "<<current_emotion_code<<"  Predict ANN:"<<max_loc<<" SVM:"<<svm_result;
+			predict_log<<" Label : "<<current_emotion_code<<"  Predict ANN:"<<max_loc<<" SVM:"<<svm_result;
+			if (current_emotion_code==max_loc)
 			{
 				correct_num++;
 				predict_result_correct_num[current_emotion_code]++;
@@ -930,6 +942,7 @@ int main( int argc, char** argv ){
 	PCA pca;
 	LDA lda;
 	CvSVM SVM;
+	CvANN_MLP nnetwork;
 	string lda_name="with_lda";
 	string pca_name="pca_lda";
 	string svm_name="svm_model_with_all";
@@ -941,12 +954,14 @@ int main( int argc, char** argv ){
 		doTrain(vec_traindata,vec_trainlabel,"hello");
 		Mat training_mat(vec_trainlabel.size(),vec_traindata[0].size(),CV_32FC1);
 		Mat train_label(vec_trainlabel.size(),1,CV_32FC1);
+		Mat train_label_ann=Mat::zeros(vec_trainlabel.size(),4,CV_32FC1);
 		cout<<"\n---------Img Feature Load Finished -----------"<<endl;
 		cout<<"Data Dimension : "<<vec_traindata[0].size()<<endl;
 		cout<<"Find Feature Data : "<<vec_trainlabel.size()<<endl<<endl;
 		for (int i = 0; i < vec_trainlabel.size(); i++)
 		{
 			train_label.at<float>(i,0) = vec_trainlabel[i];
+			train_label_ann.at<float>(i,vec_trainlabel[i])=1;
 		}
 
 		for (int i = 0; i < vec_traindata.size(); i++)
@@ -959,7 +974,7 @@ int main( int argc, char** argv ){
 		cout<<"\n==============Now SVM Training ============="<<endl;
 		CvSVMParams params;
 		params.svm_type = CvSVM::C_SVC;
-		params.kernel_type = CvSVM::RBF;
+		params.kernel_type = CvSVM::LINEAR;
 		params.term_crit = cvTermCriteria(CV_TERMCRIT_ITER,1000,5e-3);
 		//CvSVMParams(,)
 		params.C= 0.131250;
@@ -978,7 +993,7 @@ int main( int argc, char** argv ){
 			ofstream pca_data_eigenvectors(pca_name+"_eigenvectors");
 			ofstream pca_data_mean(pca_name+"_mean");
 
-			pca(training_mat, Mat(),CV_PCA_DATA_AS_ROW,25); 
+			pca(training_mat, Mat(),CV_PCA_DATA_AS_ROW,20); 
 
 			pca_data_eigenvalues<<pca.eigenvalues<<endl;
 			pca_data_eigenvectors<<pca.eigenvectors<<endl;
@@ -1027,7 +1042,7 @@ int main( int argc, char** argv ){
 		if (!CvParamGrid_C.check() || !CvParamGrid_gamma.check())
 			cout<<"The grid is NOT VALID."<<endl;
 		CvSVMParams paramz;
-		paramz.kernel_type = CvSVM::RBF;
+		paramz.kernel_type = CvSVM::LINEAR;
 		paramz.svm_type = CvSVM::C_SVC;
 		paramz.term_crit = cvTermCriteria(CV_TERMCRIT_ITER,100,0.000001);
 		atSVM.train_auto(final_train, train_label, Mat(), Mat(), paramz,10, CvParamGrid_C, CvParamGrid_gamma, CvSVM::get_default_grid(CvSVM::P), CvSVM::get_default_grid(CvSVM::NU), CvSVM::get_default_grid(CvSVM::COEF), CvSVM::get_default_grid(CvSVM::DEGREE), false);
@@ -1050,6 +1065,34 @@ int main( int argc, char** argv ){
 		SVM.train(final_train,train_label,Mat(),Mat(),params);
 		SVM.save(svm_name.c_str());
 		cout<<"\n---------Training Finished & File Saved -----------"<<endl;
+
+		//ANN now
+
+		cv::Mat layers(1,3,CV_32S);  
+		layers.at<int>(0,0) =final_train.cols;//input layer  
+		layers.at<int>(0,1)=sqrt(final_train.cols*4);//hidden layer   
+		layers.at<int>(0,2) =4;//output layer  
+
+		//创建神经网络  
+
+		nnetwork.create(layers, CvANN_MLP::SIGMOID_SYM,1,1);  
+
+		CvANN_MLP_TrainParams params_ann(                                    
+
+			// 终止训练在 1000 次迭代之后  
+			// 或者神经网络的权值某次迭代  
+			// 之后发生了很小的改变  
+			cvTermCriteria(CV_TERMCRIT_ITER+CV_TERMCRIT_EPS, 1000, 0.000001),  
+			// 使用BP算法训练  
+			CvANN_MLP_TrainParams::BACKPROP,  
+			// BP算法的系数  
+			// recommended values taken from http://docs.opencv.org/modules/ml/doc/neural_networks.html#cvann-mlp-trainparams  
+			0.1,  
+			0.1);  
+		printf( "\nUsing training dataset\n");  
+		int iterations = nnetwork.train(final_train, train_label_ann,cv::Mat(),cv::Mat(),params_ann);  
+		printf( "Training iterations: %i\n\n", iterations); 
+
 	}
 	else
 	{
@@ -1089,9 +1132,10 @@ int main( int argc, char** argv ){
 
 	cout<<"----start predict--------"<<endl;
 
-	doPredict(testlist,SVM,emotion_2_number,pca,lda);
+	doPredict(testlist,SVM,emotion_2_number,pca,lda,nnetwork);
+
+
 
 
 	return 0;
 }
-

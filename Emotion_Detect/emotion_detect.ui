@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>555</width>
-    <height>637</height>
+    <width>770</width>
+    <height>478</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,23 +20,13 @@
       <x>10</x>
       <y>10</y>
       <width>531</width>
-      <height>451</height>
+      <height>325</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout" rowstretch="0,0" columnstretch="3,1">
+    <layout class="QGridLayout" name="gridLayout" rowstretch="0,0" columnstretch="0,0">
      <property name="spacing">
       <number>0</number>
      </property>
-     <item row="1" column="1">
-      <widget class="QPushButton" name="choose_path">
-       <property name="text">
-        <string>Choose Path</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QListWidget" name="fileList"/>
-     </item>
      <item row="1" column="0">
       <widget class="QSlider" name="video_status">
        <property name="orientation">
@@ -55,7 +45,7 @@
        <property name="minimumSize">
         <size>
          <width>400</width>
-         <height>400</height>
+         <height>300</height>
         </size>
        </property>
        <property name="acceptDrops">
@@ -76,7 +66,7 @@
           <x>0</x>
           <y>0</y>
           <width>398</width>
-          <height>424</height>
+          <height>298</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
@@ -84,6 +74,9 @@
           <widget class="QLabel" name="picshow">
            <property name="scaledContents">
             <bool>false</bool>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
            </property>
            <property name="wordWrap">
             <bool>false</bool>
@@ -94,6 +87,16 @@
        </widget>
       </widget>
      </item>
+     <item row="1" column="1">
+      <widget class="QPushButton" name="choose_path">
+       <property name="text">
+        <string>Choose Path</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QListWidget" name="fileList"/>
+     </item>
     </layout>
    </widget>
    <widget class="QGroupBox" name="predict_control">
@@ -102,10 +105,10 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>470</y>
+      <x>560</x>
+      <y>10</y>
       <width>161</width>
-      <height>161</height>
+      <height>151</height>
      </rect>
     </property>
     <property name="title">
@@ -140,62 +143,18 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QGroupBox" name="group_result">
+   <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>470</y>
-      <width>131</width>
-      <height>161</height>
+      <x>560</x>
+      <y>180</y>
+      <width>161</width>
+      <height>121</height>
      </rect>
     </property>
     <property name="title">
-     <string>Result</string>
+     <string>Test</string>
     </property>
-    <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-    </property>
-    <widget class="QWidget" name="verticalLayoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>111</width>
-       <height>141</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" name="result_layout">
-      <property name="spacing">
-       <number>3</number>
-      </property>
-     </layout>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBox">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>480</y>
-      <width>141</width>
-      <height>151</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>GroupBox</string>
-    </property>
-    <widget class="QPushButton" name="pushButton">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>70</y>
-       <width>81</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>PushButton</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="but_capture">
      <property name="geometry">
       <rect>
@@ -206,10 +165,266 @@
       </rect>
      </property>
      <property name="text">
-      <string>Capture</string>
+      <string>getNeutral</string>
      </property>
     </widget>
    </widget>
+   <widget class="QWidget" name="widget_res" native="true">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>330</y>
+      <width>321</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <widget class="QWidget" name="gridWidget_2" native="true">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>19</y>
+       <width>301</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(216, 216, 216);</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2" rowstretch="4,0">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item row="1" column="1">
+       <widget class="QLabel" name="label_res_1">
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-width: 1px;
+   border-style: solid;
+   border-color: rgb(85, 85, 85,0);
+border-right-color: rgb(85, 85, 85);
+</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="indent">
+         <number>-1</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QLabel" name="label_res_3">
+        <property name="styleSheet">
+         <string notr="true">border-width: 1px;
+   border-style: solid;
+   border-color: rgb(85, 85, 85,0);
+
+</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLabel" name="label_res_2">
+        <property name="styleSheet">
+         <string notr="true">border-width: 1px;
+   border-style: solid;
+   border-color: rgb(85, 85, 85,0);
+border-right-color: rgb(85, 85, 85);
+</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_res_4">
+        <property name="styleSheet">
+         <string notr="true">border-width: 1px;
+   border-style: solid;
+   border-color: rgb(85, 85, 85,0);
+border-right-color: rgb(85, 85, 85);
+border-bottom-color: rgb(85, 85, 85);
+font: 75 14pt &quot;微软雅黑&quot;;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>Resources/1_02.png</pixmap>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="label_res_5">
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-width: 1px;
+   border-style: solid;
+   border-color: rgb(85, 85, 85,0);
+border-right-color: rgb(85, 85, 85);
+border-bottom-color: rgb(85, 85, 85);
+font: 75 14pt &quot;微软雅黑&quot;;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>Resources/1_01.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="indent">
+         <number>-1</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_res_0">
+        <property name="styleSheet">
+         <string notr="true">border-width: 1px;
+   border-style: solid;
+   border-color: rgb(85, 85, 85,0);
+border-right-color: rgb(85, 85, 85);</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="label_res_6">
+        <property name="styleSheet">
+         <string notr="true">border-width: 1px;
+   border-style: solid;
+   border-color: rgb(85, 85, 85,0);
+border-right-color: rgb(85, 85, 85);
+border-bottom-color: rgb(85, 85, 85);
+font: 75 14pt &quot;微软雅黑&quot;;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>Resources/1_03.png</pixmap>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QLabel" name="label_res_7">
+        <property name="styleSheet">
+         <string notr="true">border-width: 1px;
+   border-style: solid;
+   border-color: rgb(85, 85, 85,0);
+
+border-bottom-color: rgb(85, 85, 85);
+font: 75 14pt &quot;微软雅黑&quot;;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>Resources/1_04.png</pixmap>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+     <zorder>label_res_1</zorder>
+     <zorder>label_res_2</zorder>
+     <zorder>label_res_3</zorder>
+     <zorder>label_res_0</zorder>
+     <zorder>label_res_4</zorder>
+     <zorder>label_res_5</zorder>
+     <zorder>label_res_6</zorder>
+     <zorder>label_res_7</zorder>
+    </widget>
+   </widget>
+   <zorder>gridLayoutWidget</zorder>
+   <zorder>predict_control</zorder>
+   <zorder>groupBox_2</zorder>
+   <zorder>widget_res</zorder>
+   <zorder>label_res_0</zorder>
+   <zorder>label_res_0</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
