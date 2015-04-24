@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>770</width>
-    <height>478</height>
+    <width>567</width>
+    <height>488</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -105,10 +105,10 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>10</y>
-      <width>161</width>
-      <height>151</height>
+      <x>400</x>
+      <y>340</y>
+      <width>141</width>
+      <height>131</height>
      </rect>
     </property>
     <property name="title">
@@ -119,7 +119,7 @@
       <rect>
        <x>30</x>
        <y>20</y>
-       <width>101</width>
+       <width>91</width>
        <height>101</height>
       </rect>
      </property>
@@ -141,39 +141,18 @@
        <string>Show LandMark</string>
       </property>
      </widget>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBox_2">
-    <property name="geometry">
-     <rect>
-      <x>560</x>
-      <y>180</y>
-      <width>161</width>
-      <height>121</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Test</string>
-    </property>
-    <widget class="QPushButton" name="but_capture">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>20</y>
-       <width>81</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>getNeutral</string>
-     </property>
+     <widget class="QPushButton" name="but_capture">
+      <property name="text">
+       <string>Stop/Start</string>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QWidget" name="widget_res" native="true">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>330</y>
+      <x>40</x>
+      <y>340</y>
       <width>321</width>
       <height>131</height>
      </rect>
@@ -419,12 +398,22 @@ font: 75 14pt &quot;微软雅黑&quot;;</string>
      <zorder>label_res_7</zorder>
     </widget>
    </widget>
-   <zorder>gridLayoutWidget</zorder>
-   <zorder>predict_control</zorder>
-   <zorder>groupBox_2</zorder>
-   <zorder>widget_res</zorder>
-   <zorder>label_res_0</zorder>
-   <zorder>label_res_0</zorder>
+   <widget class="QLabel" name="model_info">
+    <property name="geometry">
+     <rect>
+      <x>303</x>
+      <y>230</y>
+      <width>101</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string>Model Info</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

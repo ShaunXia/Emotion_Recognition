@@ -42,7 +42,8 @@ public:
 	void but_capture();
 	void but_happy();
 	void but_normal();
-	void but_sleepy();
+	void but_angry();
+	void but_surprised();
 
 	void but_svm_or_facs();
 	void but_load_model();

@@ -1,0 +1,188 @@
+1 / 167  --->  new_test\angry#0i8z4pw5enddh4.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+2 / 167  --->  new_test\angry#0ksiguzcfkdgdl.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+3 / 167  --->  new_test\angry#0llyi3s9lqiif9.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+4 / 167  --->  new_test\angry#0txsx8051i9vdj.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+5 / 167  --->  new_test\angry#1mxo6ot2g6sx1l.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+6 / 167  --->  new_test\angry#59jbjvtftsxqu9.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+7 / 167  --->  new_test\angry#7htuld80dcbdm8.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+8 / 167  --->  new_test\angry#9rl6ga2ohw77m4.jpg  Label : 0  Predict ANN:0 SVM:1 -- Incorrect!
+9 / 167  --->  new_test\angry#b1hu6ox7mkk7wf.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+10 / 167  --->  new_test\angry#csjakgs3c4mmxx.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+11 / 167  --->  new_test\angry#e38w8trjvhsf8z.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+12 / 167  --->  new_test\angry#gt7bcuv9yo6g68.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+13 / 167  --->  new_test\angry#h269pyzikas4lc.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+14 / 167  --->  new_test\angry#j8x1ekzvu9xpe5.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+15 / 167  --->  new_test\angry#mcyacfdch1dj3s.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+16 / 167  --->  new_test\angry#n0rstboypcpg82.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+17 / 167  --->  new_test\angry#ppxhb8cxjq7ack.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+18 / 167  --->  new_test\angry#prqw40a8je4bij.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+19 / 167  --->  new_test\angry#qi8d8sbeh6r6ia.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+20 / 167  --->  new_test\angry#rjcpwp5k3flq9y.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+21 / 167  --->  new_test\angry#s8gtwt7k1i2t78.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+22 / 167  --->  new_test\angry#u21d4crf9698w3.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+23 / 167  --->  new_test\angry#uhmrb297q64rks.jpg  Label : 0  Predict ANN:0 SVM:2 -- Incorrect!
+24 / 167  --->  new_test\angry#un4rixly2m1ad6.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+25 / 167  --->  new_test\angry#vxfgkdcf07ysgt.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+26 / 167  --->  new_test\angry#w28f8ep1j2i8bz.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+27 / 167  --->  new_test\angry#xvyfc4w8fv02hz.jpg  Label : 0  Predict ANN:0 SVM:2 -- Incorrect!
+28 / 167  --->  new_test\angry#xxradpop5a14sc.jpg   ## Detect None 
+29 / 167  --->  new_test\angry#yy793mgxph3d72.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+30 / 167  --->  new_test\angry#z86e0bfdfl6nau.jpg  Label : 0  Predict ANN:0 SVM:1 -- Incorrect!
+31 / 167  --->  new_test\angry#zl3dtrhzokdbm7.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+32 / 167  --->  new_test\angry#zl775n2epob1vd.jpg  Label : 0  Predict ANN:0 SVM:3 -- Incorrect!
+33 / 167  --->  new_test\angry#zmds6gtxno9fw4.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+34 / 167  --->  new_test\angry#zoqil0uymxasd3.jpg  Label : 0  Predict ANN:0 SVM:0 -- Correct!
+35 / 167  --->  new_test\happy#EMBfemale20-2happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+36 / 167  --->  new_test\happy#EMBfemale20happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+37 / 167  --->  new_test\happy#EMBfemale21-2happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+38 / 167  --->  new_test\happy#EMBfemale21-3happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+39 / 167  --->  new_test\happy#EMBfemale21-4happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+40 / 167  --->  new_test\happy#EMBfemale21happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+41 / 167  --->  new_test\happy#EMBfemale22-2happy.jpg   ## Detect None 
+42 / 167  --->  new_test\happy#EMBfemale22-3happy.jpg   ## Detect None 
+43 / 167  --->  new_test\happy#EMBfemale22-4happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+44 / 167  --->  new_test\happy#EMBfemale22happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+45 / 167  --->  new_test\happy#EMBfemale25happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+46 / 167  --->  new_test\happy#EMBfemale26happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+47 / 167  --->  new_test\happy#EMBfemale29happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+48 / 167  --->  new_test\happy#EMBfemale33happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+49 / 167  --->  new_test\happy#EMBmale20happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+50 / 167  --->  new_test\happy#EMBmale24happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+51 / 167  --->  new_test\happy#EMBmale26happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+52 / 167  --->  new_test\happy#EMBmale55happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+53 / 167  --->  new_test\happy#EMIfemale19happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+54 / 167  --->  new_test\happy#EMIfemale25-2happy.jpg  Label : 1  Predict ANN:1 SVM:0 -- Incorrect!
+55 / 167  --->  new_test\happy#EMIfemale25happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+56 / 167  --->  new_test\happy#EMImale21-2happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+57 / 167  --->  new_test\happy#EMImale23-2happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+58 / 167  --->  new_test\happy#EMImale23happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+59 / 167  --->  new_test\happy#EMImale24-2happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+60 / 167  --->  new_test\happy#EMImale24-3happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+61 / 167  --->  new_test\happy#EMImale24happy.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+62 / 167  --->  new_test\happy#subject01.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+63 / 167  --->  new_test\happy#subject02.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+64 / 167  --->  new_test\happy#subject03.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+65 / 167  --->  new_test\happy#subject04.jpg  Label : 1  Predict ANN:1 SVM:0 -- Incorrect!
+66 / 167  --->  new_test\happy#subject05.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+67 / 167  --->  new_test\happy#subject06.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+68 / 167  --->  new_test\happy#subject07.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+69 / 167  --->  new_test\happy#subject08.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+70 / 167  --->  new_test\happy#subject09.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+71 / 167  --->  new_test\happy#subject10.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+72 / 167  --->  new_test\happy#subject11.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+73 / 167  --->  new_test\happy#subject12.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+74 / 167  --->  new_test\happy#subject13.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+75 / 167  --->  new_test\happy#subject14.jpg  Label : 1  Predict ANN:1 SVM:2 -- Incorrect!
+76 / 167  --->  new_test\happy#subject15.jpg  Label : 1  Predict ANN:1 SVM:1 -- Correct!
+77 / 167  --->  new_test\neutral#TMAfemale19neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+78 / 167  --->  new_test\neutral#TMAfemale20neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+79 / 167  --->  new_test\neutral#TMBfemale22neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+80 / 167  --->  new_test\neutral#TMHmale18neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+81 / 167  --->  new_test\neutral#TMWfemale18-3neutral.jpg  Label : 2  Predict ANN:2 SVM:0 -- Incorrect!
+82 / 167  --->  new_test\neutral#TMWfemale18neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+83 / 167  --->  new_test\neutral#TMWfemale19neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+84 / 167  --->  new_test\neutral#TMWfemale20neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+85 / 167  --->  new_test\neutral#TMWfemale21-2neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+86 / 167  --->  new_test\neutral#TMWfemale21neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+87 / 167  --->  new_test\neutral#TMWfemale22neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+88 / 167  --->  new_test\neutral#TMWfemale25neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+89 / 167  --->  new_test\neutral#TMWmale18neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+90 / 167  --->  new_test\neutral#TMWmale19neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+91 / 167  --->  new_test\neutral#TMWmale20-2neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+92 / 167  --->  new_test\neutral#TMWmale22-3neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+93 / 167  --->  new_test\neutral#TMWmale23neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+94 / 167  --->  new_test\neutral#TMWmale25-2neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+95 / 167  --->  new_test\neutral#TMWmale25neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+96 / 167  --->  new_test\neutral#ubject01.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+97 / 167  --->  new_test\neutral#ubject02.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+98 / 167  --->  new_test\neutral#ubject03.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+99 / 167  --->  new_test\neutral#ubject04.jpg  Label : 2  Predict ANN:2 SVM:0 -- Incorrect!
+100 / 167  --->  new_test\neutral#ubject05.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+101 / 167  --->  new_test\neutral#ubject06.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+102 / 167  --->  new_test\neutral#ubject07.jpg  Label : 2  Predict ANN:2 SVM:0 -- Incorrect!
+103 / 167  --->  new_test\neutral#ubject08.jpg  Label : 2  Predict ANN:2 SVM:0 -- Incorrect!
+104 / 167  --->  new_test\neutral#ubject09.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+105 / 167  --->  new_test\neutral#ubject10.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+106 / 167  --->  new_test\neutral#ubject11.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+107 / 167  --->  new_test\neutral#ubject12.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+108 / 167  --->  new_test\neutral#ubject13.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+109 / 167  --->  new_test\neutral#ubject14.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+110 / 167  --->  new_test\neutral#ubject15.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+111 / 167  --->  new_test\neutral#WImale22neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+112 / 167  --->  new_test\neutral#Wmale_24.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+113 / 167  --->  new_test\neutral#WWmale19neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+114 / 167  --->  new_test\neutral#WWmale20-1neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+115 / 167  --->  new_test\neutral#WWmale20-2neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+116 / 167  --->  new_test\neutral#WWmale20neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+117 / 167  --->  new_test\neutral#WWmale21neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+118 / 167  --->  new_test\neutral#WWmale22-2neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+119 / 167  --->  new_test\neutral#WWmale22-3neutral.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+120 / 167  --->  new_test\neutral#YM.NE1.49.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+121 / 167  --->  new_test\neutral#YM.NE2.50.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+122 / 167  --->  new_test\neutral#YM.NE3.51.jpg  Label : 2  Predict ANN:2 SVM:2 -- Correct!
+123 / 167  --->  new_test\surprised#KA.SU1.36.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+124 / 167  --->  new_test\surprised#KA.SU2.37.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+125 / 167  --->  new_test\surprised#KA.SU3.38.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+126 / 167  --->  new_test\surprised#KL.SU1.164.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+127 / 167  --->  new_test\surprised#KL.SU2.165.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+128 / 167  --->  new_test\surprised#KL.SU3.166.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+129 / 167  --->  new_test\surprised#KM.SU1.14.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+130 / 167  --->  new_test\surprised#KM.SU2.15.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+131 / 167  --->  new_test\surprised#KM.SU3.16.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+132 / 167  --->  new_test\surprised#KR.SU1.80.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+133 / 167  --->  new_test\surprised#KR.SU2.81.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+134 / 167  --->  new_test\surprised#KR.SU3.82.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+135 / 167  --->  new_test\surprised#MK.SU1.122.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+136 / 167  --->  new_test\surprised#MK.SU2.123.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+137 / 167  --->  new_test\surprised#MK.SU3.124.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+138 / 167  --->  new_test\surprised#NA.SU1.208.jpg  Label : 3  Predict ANN:3 SVM:1 -- Incorrect!
+139 / 167  --->  new_test\surprised#NA.SU2.209.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+140 / 167  --->  new_test\surprised#NA.SU3.210.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+141 / 167  --->  new_test\surprised#NM.SU1.101.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+142 / 167  --->  new_test\surprised#NM.SU2.102.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+143 / 167  --->  new_test\surprised#NM.SU3.103.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+144 / 167  --->  new_test\surprised#subject01.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+145 / 167  --->  new_test\surprised#subject02.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+146 / 167  --->  new_test\surprised#subject03.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+147 / 167  --->  new_test\surprised#subject04.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+148 / 167  --->  new_test\surprised#subject05.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+149 / 167  --->  new_test\surprised#subject06.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+150 / 167  --->  new_test\surprised#subject07.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+151 / 167  --->  new_test\surprised#subject08.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+152 / 167  --->  new_test\surprised#subject09.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+153 / 167  --->  new_test\surprised#subject10.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+154 / 167  --->  new_test\surprised#subject11.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+155 / 167  --->  new_test\surprised#subject12.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+156 / 167  --->  new_test\surprised#subject13.jpg  Label : 3  Predict ANN:3 SVM:0 -- Incorrect!
+157 / 167  --->  new_test\surprised#subject14.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+158 / 167  --->  new_test\surprised#subject15.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+159 / 167  --->  new_test\surprised#TM.SU1.187.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+160 / 167  --->  new_test\surprised#TM.SU2.188.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+161 / 167  --->  new_test\surprised#TM.SU3.189.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+162 / 167  --->  new_test\surprised#UY.SU1.143.jpg  Label : 3  Predict ANN:3 SVM:2 -- Incorrect!
+163 / 167  --->  new_test\surprised#UY.SU2.144.jpg  Label : 3  Predict ANN:3 SVM:2 -- Incorrect!
+164 / 167  --->  new_test\surprised#UY.SU3.145.jpg  Label : 3  Predict ANN:3 SVM:2 -- Incorrect!
+165 / 167  --->  new_test\surprised#YM.SU1.58.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+166 / 167  --->  new_test\surprised#YM.SU2.59.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+167 / 167  --->  new_test\surprised#YM.SU3.60.jpg  Label : 3  Predict ANN:3 SVM:3 -- Correct!
+Correct / All :147 / 164 | 0.896341
+Code 0 :28 / 33
+Code 1 :37 / 40
+Code 2 :42 / 46
+Code 3 :40 / 45
+
+DR_TYPE 1
+Data Dimension: 20
+
+SVM PARAMETER
+C: 0.03125
+kernel_type: 0
+svm_type: 100
+
+SVM type type
+
+ C_SVC=100, NU_SVC=101, ONE_CLASS=102, EPS_SVR=103, NU_SVR=104 
+
+SVM kernel type
+
+LINEAR=0, POLY=1, RBF=2, SIGMOID=3

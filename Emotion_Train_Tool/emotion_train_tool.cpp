@@ -21,7 +21,9 @@ Emotion_Train_Tool::Emotion_Train_Tool(QWidget *parent)
 	connect(ui.but_capture,SIGNAL(clicked()),this,SLOT(but_capture()));
 	connect(ui.but_happy,SIGNAL(clicked()),this,SLOT(but_happy()));
 	connect(ui.but_normal,SIGNAL(clicked()),this,SLOT(but_normal()));
-	connect(ui.but_sleepy,SIGNAL(clicked()),this,SLOT(but_sleepy()));
+	connect(ui.but_angry,SIGNAL(clicked()),this,SLOT(but_angry()));
+	connect(ui.but_surprised,SIGNAL(clicked()),this,SLOT(but_surprised()));
+
 
 	connect(ui.but_svm_or_facs,SIGNAL(clicked()),this,SLOT(but_svm_or_facs()));
 	connect(ui.but_load_model,SIGNAL(clicked()),this,SLOT(but_load_model()));
@@ -190,7 +192,8 @@ void Emotion_Train_Tool::but_capture()
 	timer->stop();
 	ui.but_happy->setDisabled(false);
 	ui.but_normal->setDisabled(false);
-	ui.but_sleepy->setDisabled(false);
+	ui.but_angry->setDisabled(false);
+	ui.but_surprised->setDisabled(false);
 }
 
 void Emotion_Train_Tool::but_happy()
@@ -202,7 +205,8 @@ void Emotion_Train_Tool::but_happy()
 	imwrite(str.toStdString(),frame_towrite);
 	ui.but_happy->setDisabled(true);
 	ui.but_normal->setDisabled(true);
-	ui.but_sleepy->setDisabled(true);
+	ui.but_angry->setDisabled(true);
+	ui.but_surprised->setDisabled(true);
 	timer->start();
 }
 
@@ -210,27 +214,43 @@ void Emotion_Train_Tool::but_happy()
 void Emotion_Train_Tool::but_normal()
 {
 	QDateTime time = QDateTime::currentDateTime();
-	QString str(".\\output\\normal#");
+	QString str(".\\output\\neutral#");
 	str.append(time.toString("MMdd_hh_mm_ss"));
 	str.append(".jpg");
 	imwrite(str.toStdString(),frame_towrite);
 	ui.but_happy->setDisabled(true);
 	ui.but_normal->setDisabled(true);
-	ui.but_sleepy->setDisabled(true);
+	ui.but_angry->setDisabled(true);
+	ui.but_surprised->setDisabled(true);
 	timer->start();
 }
 
 
-void Emotion_Train_Tool::but_sleepy()
+void Emotion_Train_Tool::but_angry()
 {
 	QDateTime time = QDateTime::currentDateTime();
-	QString str(".\\output\\sleepy#");
+	QString str(".\\output\\angry#");
 	str.append(time.toString("MMdd_hh_mm_ss"));
 	str.append(".jpg");
 	imwrite(str.toStdString(),frame_towrite);
 	ui.but_happy->setDisabled(true);
 	ui.but_normal->setDisabled(true);
-	ui.but_sleepy->setDisabled(true);
+	ui.but_angry->setDisabled(true);
+	ui.but_surprised->setDisabled(true);
+	timer->start();
+}
+
+void Emotion_Train_Tool::but_surprised()
+{
+	QDateTime time = QDateTime::currentDateTime();
+	QString str(".\\output\\surprised#");
+	str.append(time.toString("MMdd_hh_mm_ss"));
+	str.append(".jpg");
+	imwrite(str.toStdString(),frame_towrite);
+	ui.but_happy->setDisabled(true);
+	ui.but_normal->setDisabled(true);
+	ui.but_angry->setDisabled(true);
+	ui.but_surprised->setDisabled(true);
 	timer->start();
 }
 
@@ -248,7 +268,8 @@ void Emotion_Train_Tool::but_svm_or_facs()
 		ui.group_facs->setDisabled(true);
 		ui.but_happy->setDisabled(true);
 		ui.but_normal->setDisabled(true);
-		ui.but_sleepy->setDisabled(true);
+		ui.but_angry->setDisabled(true);
+		ui.but_surprised->setDisabled(true);
 		ui.fileList->setDisabled(false);
 	}
 }

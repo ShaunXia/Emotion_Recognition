@@ -124,34 +124,41 @@
       <string>Capture</string>
      </property>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>120</x>
        <y>40</y>
        <width>91</width>
-       <height>101</height>
+       <height>131</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QPushButton" name="but_sleepy">
+       <widget class="QPushButton" name="but_angry">
         <property name="text">
-         <string>Sleepy</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="but_normal">
-        <property name="text">
-         <string>Normal</string>
+         <string>angry</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="but_happy">
         <property name="text">
-         <string>Happy</string>
+         <string>happy</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="but_normal">
+        <property name="text">
+         <string>neutral</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="but_surprised">
+        <property name="text">
+         <string>surprised</string>
         </property>
        </widget>
       </item>
@@ -168,7 +175,7 @@
      </rect>
     </property>
     <property name="title">
-     <string>FACS TRAIN INFO</string>
+     <string>Location INFO</string>
     </property>
     <widget class="QPlainTextEdit" name="log_facs_info">
      <property name="geometry">
@@ -194,7 +201,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>560</x>

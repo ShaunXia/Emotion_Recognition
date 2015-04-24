@@ -347,3 +347,25 @@ int LandmarkPredict::doPredict(vector<Point> &vec_landmark,CvSVM &SVM,PCA &pca,L
 	return SVM.predict(dst);
 
 }
+
+string LandmarkPredict::getModelInfo()
+{
+	string pca_dim,svm;
+	char tp[100];
+	sprintf(tp,"Dim:%d\n",pca.eigenvalues.rows);
+	pca_dim=tp;
+	CvSVMParams svm_para= SVM.get_params();
+	if (svm_para.svm_type==100)
+	{
+		svm="SVM Type:C_SVC\n";
+	}
+	if (svm_para.kernel_type==0)
+	{
+		svm+="Kernel:LINEAR\n";
+		sprintf(tp,"C:%f\n",svm_para.C);
+		string st_tp=tp;
+		svm+=st_tp;
+	}
+	string res=pca_dim+svm;
+	return res;
+}

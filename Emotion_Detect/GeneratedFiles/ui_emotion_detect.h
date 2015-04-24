@@ -46,8 +46,6 @@ public:
     QPushButton *but_loadlbf;
     QPushButton *but_start_detect;
     QPushButton *but_show_landmark;
-    QGroupBox *groupBox_2;
-    QPushButton *pushButton;
     QPushButton *but_capture;
     QWidget *widget_res;
     QWidget *gridWidget_2;
@@ -60,12 +58,13 @@ public:
     QLabel *label_res_0;
     QLabel *label_res_6;
     QLabel *label_res_7;
+    QLabel *model_info;
 
     void setupUi(QMainWindow *Emotion_DetectClass)
     {
         if (Emotion_DetectClass->objectName().isEmpty())
             Emotion_DetectClass->setObjectName(QStringLiteral("Emotion_DetectClass"));
-        Emotion_DetectClass->resize(770, 478);
+        Emotion_DetectClass->resize(567, 488);
         centralWidget = new QWidget(Emotion_DetectClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayoutWidget = new QWidget(centralWidget);
@@ -126,10 +125,10 @@ public:
         predict_control = new QGroupBox(centralWidget);
         predict_control->setObjectName(QStringLiteral("predict_control"));
         predict_control->setEnabled(true);
-        predict_control->setGeometry(QRect(560, 10, 161, 151));
+        predict_control->setGeometry(QRect(400, 340, 141, 131));
         splitter = new QSplitter(predict_control);
         splitter->setObjectName(QStringLiteral("splitter"));
-        splitter->setGeometry(QRect(30, 20, 101, 101));
+        splitter->setGeometry(QRect(30, 20, 91, 101));
         splitter->setOrientation(Qt::Vertical);
         but_loadlbf = new QPushButton(splitter);
         but_loadlbf->setObjectName(QStringLiteral("but_loadlbf"));
@@ -140,18 +139,12 @@ public:
         but_show_landmark = new QPushButton(splitter);
         but_show_landmark->setObjectName(QStringLiteral("but_show_landmark"));
         splitter->addWidget(but_show_landmark);
-        groupBox_2 = new QGroupBox(centralWidget);
-        groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
-        groupBox_2->setGeometry(QRect(550, 180, 161, 121));
-        pushButton = new QPushButton(groupBox_2);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(30, 70, 81, 31));
-        but_capture = new QPushButton(groupBox_2);
+        but_capture = new QPushButton(splitter);
         but_capture->setObjectName(QStringLiteral("but_capture"));
-        but_capture->setGeometry(QRect(30, 20, 81, 31));
+        splitter->addWidget(but_capture);
         widget_res = new QWidget(centralWidget);
         widget_res->setObjectName(QStringLiteral("widget_res"));
-        widget_res->setGeometry(QRect(90, 330, 321, 131));
+        widget_res->setGeometry(QRect(40, 340, 321, 131));
         gridWidget_2 = new QWidget(widget_res);
         gridWidget_2->setObjectName(QStringLiteral("gridWidget_2"));
         gridWidget_2->setGeometry(QRect(0, 19, 301, 100));
@@ -282,13 +275,11 @@ public:
         label_res_5->raise();
         label_res_6->raise();
         label_res_7->raise();
+        model_info = new QLabel(centralWidget);
+        model_info->setObjectName(QStringLiteral("model_info"));
+        model_info->setGeometry(QRect(303, 230, 101, 71));
+        model_info->setFrameShape(QFrame::Box);
         Emotion_DetectClass->setCentralWidget(centralWidget);
-        gridLayoutWidget->raise();
-        predict_control->raise();
-        groupBox_2->raise();
-        widget_res->raise();
-        label_res_0->raise();
-        label_res_0->raise();
 
         retranslateUi(Emotion_DetectClass);
 
@@ -303,9 +294,7 @@ public:
         but_loadlbf->setText(QApplication::translate("Emotion_DetectClass", "Load Model", 0));
         but_start_detect->setText(QApplication::translate("Emotion_DetectClass", "Start Detect", 0));
         but_show_landmark->setText(QApplication::translate("Emotion_DetectClass", "Show LandMark", 0));
-        groupBox_2->setTitle(QApplication::translate("Emotion_DetectClass", "GroupBox", 0));
-        pushButton->setText(QApplication::translate("Emotion_DetectClass", "PushButton", 0));
-        but_capture->setText(QApplication::translate("Emotion_DetectClass", "Capture", 0));
+        but_capture->setText(QApplication::translate("Emotion_DetectClass", "Stop/Start", 0));
         label_res_1->setText(QString());
         label_res_3->setText(QString());
         label_res_2->setText(QString());
@@ -314,6 +303,7 @@ public:
         label_res_0->setText(QString());
         label_res_6->setText(QString());
         label_res_7->setText(QString());
+        model_info->setText(QApplication::translate("Emotion_DetectClass", "Model Info", 0));
     } // retranslateUi
 
 };

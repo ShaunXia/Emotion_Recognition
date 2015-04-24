@@ -18,6 +18,7 @@ public:
 	void landMarkInfo(vector<Point>&);
 	void loadModel();
 	Mat loadMat(string mat_name);
+	string getModelInfo();
 	
 	CvSVM SVM;
 	LDA lda;

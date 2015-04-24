@@ -24,8 +24,6 @@ Emotion_Detect::Emotion_Detect(QWidget *parent)
 		QString st = QString::fromStdString(estring);
 		st.append(" - ");
 		st.append(QString::number(ecode));
-		
-
 	}
 	map_file.close();
 	ui.label_res_0->setText(QString::fromStdString(num2emo[0]));
@@ -115,8 +113,6 @@ void Emotion_Detect::itemclick (QListWidgetItem *item)
 					//Show LANDMARK IN PIC
 					Point center( current_landMark[i].x, current_landMark[i].y ); 
 					ellipse( frame_with_landMark, center, Size( 1, 1), 0, 0, 0, Scalar( 255, 0, 255 ), 4, 8, 0); 
-
-					//line(frame_with_landMark, current_landMark[27], current_landMark[i], Scalar( 255, 255, 255 ), 1, CV_AA, 0);
 
 					//Show Fixed Point 
 					Point center1( current_landMark_fixed[i].x, current_landMark_fixed[i].y ); 
@@ -234,22 +230,24 @@ void Emotion_Detect::startLoopSlot()
 			for (int i = 0; i < current_landMark.size(); i++)
 			{
 				Point center( current_landMark[i].x, current_landMark[i].y ); 
-				ellipse( frame_with_landMark, center, Size( 1, 1), 0, 0, 0, Scalar( 255, 0, 255 ), 4, 8, 0); 
+				ellipse( frame_with_landMark, center, Size( 1, 1), 0, 0, 0, Scalar( 0, 0, 255 ), 4, 8, 0); 
 				Point center_fix(current_landMark_fixed[i].x, current_landMark_fixed[i].y);
-				ellipse( show_fixed_point, center_fix, Size( 1, 1), 0, 0, 0, Scalar( 255, 0, 255 ), 4, 8, 0); 
+				ellipse( show_fixed_point, center_fix, Size( 1, 1), 0, 0, 0, Scalar( 0, 0, 255 ), 4, 8, 0); 
+				char c[3];
+				sprintf(c, "%d", i);
+				string words= c;  
+				putText( show_fixed_point, words, center_fix,CV_FONT_HERSHEY_SIMPLEX, 0.6, Scalar(255, 0, 0)); 
+
 				if (i%2==0)
 				{
 					subdiv.insert(current_landMark[i]);
 				}
-
 			}
 			draw_subdiv( frame_with_landMark, subdiv, delaunay_color );
 			frame_forQTshow=frame_with_landMark.clone();
 			imshow("x",show_fixed_point);
 
-			//imshow( win, img );
-			//waitKey(30);
-			waitKey(30);
+
 
 		}
 		else
@@ -258,21 +256,8 @@ void Emotion_Detect::startLoopSlot()
 	else
 		frame_forQTshow=frame_ori.clone();
 
-	Mat new_face= neutral_face.clone();
-	for (int i = 0; i < current_landMark_fixed.size(); i++)
-	{
-		//show_neutral.at<float>(neutral_landMark[i].x,neutral_landMark[i].x);
-		Point center;
-		if (get_neutral)
-		{
-			Point pt=neutral_landMark[27]-current_landMark_fixed[27];
-			center=Point( current_landMark_fixed[i].x+pt.x, current_landMark_fixed[i].y+pt.y ); 
-		}
-		else
-			center=Point( current_landMark_fixed[i].x, current_landMark_fixed[i].y ); 
-		ellipse( new_face, center, Size( 1, 1), 0, 0, 0, Scalar( 255), 4, 8, 0); 
-	}
-
+	imshow("Ori",frame_ori);
+	waitKey(30);
 	cvtColor(frame_forQTshow, frame_forQTshow, CV_BGR2RGB); 
 	qCam = new QImage((unsigned char*)frame_forQTshow.data, // uchar* data  
 		frame_forQTshow.cols, frame_forQTshow.rows, // width height  
@@ -301,6 +286,7 @@ void Emotion_Detect::but_loadmodel()
 {
 	LPredict.loadModel();
 	ui.but_loadlbf->setText("Loaded!");
+	ui.model_info->setText(QString::fromStdString(LPredict.getModelInfo()));
 }
 
 void Emotion_Detect::but_start_detect()
@@ -324,20 +310,12 @@ void Emotion_Detect::but_show_landmark()
 
 void Emotion_Detect::but_capture()
 {
-	get_neutral=1;
-	neutral_landMark.clear();
-	timer->stop();
-	LPredict.getLandmark(frame_ori,neutral_landMark,neutral_landMark_fixed);
-	neutral_face=Mat::zeros(640,780,CV_32FC1);
-	for (int i = 0; i < neutral_landMark_fixed.size(); i++)
+	if (timer->isActive())
 	{
-		//show_neutral.at<float>(neutral_landMark[i].x,neutral_landMark[i].x);
-		Point center( neutral_landMark_fixed[i].x, neutral_landMark_fixed[i].y ); 
-		ellipse( neutral_face, center, Size( 1, 1), 0, 0, 0, Scalar( 255, 0, 255 ), 4, 8, 0); 
+		timer->stop();
 	}
-	imshow("neutral",neutral_face);
-	timer->start();
-	waitKey(0);
+	else
+		timer->start();
 }
 
 void Emotion_Detect::draw_subdiv( Mat& img, Subdiv2D& subdiv, Scalar delaunay_color )
@@ -373,24 +351,6 @@ void Emotion_Detect::draw_subdiv( Mat& img, Subdiv2D& subdiv, Scalar delaunay_co
 
 void Emotion_Detect::but_tri(int res)
 {
-	/*
-	Scalar active_facet_color(0, 0, 255), delaunay_color(255,255,255);
-	Rect rect(0, 0, 1000, 1000);
-	Subdiv2D subdiv(rect);
-	Mat img(rect.size(), CV_8UC3);
-
-	img = Scalar::all(0);
-	string win = "Delaunay Demo";
-	imshow(win, img);
-
-	for( int i = 0; i < current_landMark_fixed.size(); i++ )
-	{
-	subdiv.insert(current_landMark_fixed[i]);
-	img = Scalar::all(0);
-	}
-	draw_subdiv( img, subdiv, delaunay_color );
-	imshow( win, img );
-	waitKey(30);*/
 	ui.label_res_0->setStyleSheet(QLatin1String("background-color: rgb(255, 85, 0,0);"));
 	ui.label_res_1->setStyleSheet(QLatin1String("background-color: rgb(255, 85, 0,0);"));
 	ui.label_res_2->setStyleSheet(QLatin1String("background-color: rgb(255, 85, 0,0);"));

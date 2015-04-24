@@ -783,7 +783,7 @@ int doPredict(vector<string> &img_list,CvSVM &SVM,map<string,int> &emotion_2_num
 			}
 			cout<<" Label : "<<current_emotion_code<<"  Predict ANN:"<<max_loc<<" SVM:"<<svm_result;
 			predict_log<<" Label : "<<current_emotion_code<<"  Predict ANN:"<<max_loc<<" SVM:"<<svm_result;
-			if (current_emotion_code==max_loc)
+			if (current_emotion_code==svm_result)
 			{
 				correct_num++;
 				predict_result_correct_num[current_emotion_code]++;

@@ -121,6 +121,7 @@
     <ClInclude Include="GeneratedFiles\ui_emotion_detect.h" />
     <ClInclude Include="LandmarkPredict.h" />
     <ClInclude Include="LBFModel.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="emotion_detect.qrc">

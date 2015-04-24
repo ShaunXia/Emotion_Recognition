@@ -44,15 +44,16 @@ public:
     QLabel *picshow;
     QGroupBox *group_emotion;
     QPushButton *but_capture;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout;
-    QPushButton *but_sleepy;
-    QPushButton *but_normal;
+    QPushButton *but_angry;
     QPushButton *but_happy;
+    QPushButton *but_normal;
+    QPushButton *but_surprised;
     QGroupBox *group_facs;
     QPlainTextEdit *log_facs_info;
     QPushButton *but_facs_info;
-    QWidget *widget1;
+    QWidget *layoutWidget1;
     QHBoxLayout *horizontalLayout_2;
     QPushButton *but_svm_or_facs;
     QPushButton *but_load_model;
@@ -128,28 +129,33 @@ public:
         but_capture = new QPushButton(group_emotion);
         but_capture->setObjectName(QStringLiteral("but_capture"));
         but_capture->setGeometry(QRect(20, 60, 71, 61));
-        widget = new QWidget(group_emotion);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(120, 40, 91, 101));
-        verticalLayout = new QVBoxLayout(widget);
+        layoutWidget = new QWidget(group_emotion);
+        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
+        layoutWidget->setGeometry(QRect(120, 40, 91, 131));
+        verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        but_sleepy = new QPushButton(widget);
-        but_sleepy->setObjectName(QStringLiteral("but_sleepy"));
+        but_angry = new QPushButton(layoutWidget);
+        but_angry->setObjectName(QStringLiteral("but_angry"));
 
-        verticalLayout->addWidget(but_sleepy);
+        verticalLayout->addWidget(but_angry);
 
-        but_normal = new QPushButton(widget);
+        but_happy = new QPushButton(layoutWidget);
+        but_happy->setObjectName(QStringLiteral("but_happy"));
+
+        verticalLayout->addWidget(but_happy);
+
+        but_normal = new QPushButton(layoutWidget);
         but_normal->setObjectName(QStringLiteral("but_normal"));
 
         verticalLayout->addWidget(but_normal);
 
-        but_happy = new QPushButton(widget);
-        but_happy->setObjectName(QStringLiteral("but_happy"));
+        but_surprised = new QPushButton(layoutWidget);
+        but_surprised->setObjectName(QStringLiteral("but_surprised"));
 
-        verticalLayout->addWidget(but_happy);
+        verticalLayout->addWidget(but_surprised);
 
         group_facs = new QGroupBox(centralWidget);
         group_facs->setObjectName(QStringLiteral("group_facs"));
@@ -160,25 +166,25 @@ public:
         but_facs_info = new QPushButton(group_facs);
         but_facs_info->setObjectName(QStringLiteral("but_facs_info"));
         but_facs_info->setGeometry(QRect(10, 20, 75, 23));
-        widget1 = new QWidget(centralWidget);
-        widget1->setObjectName(QStringLiteral("widget1"));
-        widget1->setGeometry(QRect(560, 20, 247, 25));
-        horizontalLayout_2 = new QHBoxLayout(widget1);
+        layoutWidget1 = new QWidget(centralWidget);
+        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
+        layoutWidget1->setGeometry(QRect(560, 20, 247, 25));
+        horizontalLayout_2 = new QHBoxLayout(layoutWidget1);
         horizontalLayout_2->setSpacing(10);
         horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
         horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
-        but_svm_or_facs = new QPushButton(widget1);
+        but_svm_or_facs = new QPushButton(layoutWidget1);
         but_svm_or_facs->setObjectName(QStringLiteral("but_svm_or_facs"));
 
         horizontalLayout_2->addWidget(but_svm_or_facs);
 
-        but_load_model = new QPushButton(widget1);
+        but_load_model = new QPushButton(layoutWidget1);
         but_load_model->setObjectName(QStringLiteral("but_load_model"));
 
         horizontalLayout_2->addWidget(but_load_model);
 
-        but_detect_trigger = new QPushButton(widget1);
+        but_detect_trigger = new QPushButton(layoutWidget1);
         but_detect_trigger->setObjectName(QStringLiteral("but_detect_trigger"));
 
         horizontalLayout_2->addWidget(but_detect_trigger);
@@ -196,10 +202,11 @@ public:
         choose_path->setText(QApplication::translate("Emotion_Train_ToolClass", "Choose Path", 0));
         group_emotion->setTitle(QApplication::translate("Emotion_Train_ToolClass", "SVM TRAIN", 0));
         but_capture->setText(QApplication::translate("Emotion_Train_ToolClass", "Capture", 0));
-        but_sleepy->setText(QApplication::translate("Emotion_Train_ToolClass", "Sleepy", 0));
-        but_normal->setText(QApplication::translate("Emotion_Train_ToolClass", "Normal", 0));
-        but_happy->setText(QApplication::translate("Emotion_Train_ToolClass", "Happy", 0));
-        group_facs->setTitle(QApplication::translate("Emotion_Train_ToolClass", "FACS TRAIN INFO", 0));
+        but_angry->setText(QApplication::translate("Emotion_Train_ToolClass", "angry", 0));
+        but_happy->setText(QApplication::translate("Emotion_Train_ToolClass", "happy", 0));
+        but_normal->setText(QApplication::translate("Emotion_Train_ToolClass", "neutral", 0));
+        but_surprised->setText(QApplication::translate("Emotion_Train_ToolClass", "surprised", 0));
+        group_facs->setTitle(QApplication::translate("Emotion_Train_ToolClass", "Location INFO", 0));
         but_facs_info->setText(QApplication::translate("Emotion_Train_ToolClass", "Get Info", 0));
         but_svm_or_facs->setText(QApplication::translate("Emotion_Train_ToolClass", "SVM/FACS", 0));
         but_load_model->setText(QApplication::translate("Emotion_Train_ToolClass", "Load Model", 0));
